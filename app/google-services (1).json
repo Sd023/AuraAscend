@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "19631823934",
+    "firebase_url": "https://auraascend-9ee02-default-rtdb.firebaseio.com",
+    "project_id": "auraascend-9ee02",
+    "storage_bucket": "auraascend-9ee02.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:19631823934:android:28b7c7ad824ea88596056f",
+        "android_client_info": {
+          "package_name": "com.sdapps.auraascend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "19631823934-cndhg9eq3h978kj0eh5p998rtqg9psrg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sdapps.auraascend",
+            "certificate_hash": "95313d1a33701ed1849cf863ba1266d953ade083"
+          }
+        },
+        {
+          "client_id": "19631823934-sgbbat3mkg16v2al03jde3skkvqofnet.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1UmEtExJWZhnsbA4VNqDNMSfDsYmsv5M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "19631823934-sgbbat3mkg16v2al03jde3skkvqofnet.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
