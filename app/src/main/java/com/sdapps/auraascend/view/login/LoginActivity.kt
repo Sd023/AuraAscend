@@ -1,8 +1,11 @@
 package com.sdapps.auraascend.view.login
 
+import android.app.ComponentCaller
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -16,7 +19,16 @@ import com.sdapps.auraascend.core.CustomProgressDialog
 import com.sdapps.auraascend.databinding.ActivityLoginBinding
 import com.sdapps.auraascend.view.home.HomeScreen
 import androidx.core.view.isGone
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.GoogleAuthProvider
+import com.sdapps.auraascend.view.login.data.Constants.Companion.GUEST
+import com.sdapps.auraascend.view.login.data.Constants.Companion.RC_SIGN_IN
+import com.sdapps.auraascend.view.login.data.Constants.Companion.REGISTER
+import com.sdapps.auraascend.view.login.data.Constants.Companion.USER
+import com.sdapps.auraascend.view.login.googlesignin.GoogleSignInHelper
 import com.sdapps.auraascend.view.login.register.RegisterUserActivity
+import com.sdapps.auraascend.view.onboarding.OnboardingActivity
 
 
 class LoginActivity : AppCompatActivity(), LoginManager.View {
@@ -24,6 +36,7 @@ class LoginActivity : AppCompatActivity(), LoginManager.View {
     private lateinit var progressDialog: CustomProgressDialog
     private lateinit var presenter: LoginPresenter
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var googleSignHelper: GoogleSignInHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +56,7 @@ class LoginActivity : AppCompatActivity(), LoginManager.View {
         presenter = LoginPresenter()
         mAuth = Firebase.auth
         presenter.attachView(this,applicationContext,mAuth)
-
+        googleSignHelper = GoogleSignInHelper(this)
 
         binding.loginBtn.setOnClickListener {
             val email = binding.etEmail.text?.trim().toString()
@@ -53,7 +66,13 @@ class LoginActivity : AppCompatActivity(), LoginManager.View {
         }
 
         binding.continueAsGuestLayout.setOnClickListener {
-            moveToNextScreen("guest")
+            moveToNextScreen(GUEST)
+        }
+
+
+        binding.gSignIn.setOnClickListener {
+            val signInIntent = googleSignHelper.client.signInIntent
+            startActivityForResult(signInIntent, RC_SIGN_IN)
         }
 
         binding.register.setOnClickListener {
@@ -73,7 +92,7 @@ class LoginActivity : AppCompatActivity(), LoginManager.View {
         super.onStart()
         val currentUser = mAuth.currentUser
         if (currentUser != null) {
-            moveToNextScreen("user")
+            moveToNextScreen(USER)
         }
     }
     override fun showLoading() {
@@ -86,12 +105,48 @@ class LoginActivity : AppCompatActivity(), LoginManager.View {
     }
 
     override fun moveToNextScreen(isFrom: String) {
-        val intent = Intent(this@LoginActivity, HomeScreen::class.java)
-        intent.putExtra("isBy", isFrom)
-        startActivity(intent)
+        when(isFrom){
+            USER -> {
+                val intent = Intent(this@LoginActivity, OnboardingActivity::class.java)
+                intent.putExtra("isBy", isFrom)
+                startActivity(intent)
+                finish()
+            }
+        }
+
     }
 
     override fun showError(msg: String) {
         progressDialog.showAlert(msg)
+    }
+
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?,
+        caller: ComponentCaller
+    ) {
+        super.onActivityResult(requestCode, resultCode, data, caller)
+        if (requestCode == RC_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(ApiException::class.java)!!
+                firebaseAuthWithGoogle(account.idToken!!)
+            } catch (e: ApiException) {
+                Log.e("GoogleSignIn", "Sign-in failed", e)
+            }
+        }
+    }
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        mAuth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val user = mAuth.currentUser
+                    moveToNextScreen(USER)
+                } else {
+                    Toast.makeText(this, "Authentication Failed!", Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 }

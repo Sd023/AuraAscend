@@ -166,7 +166,7 @@
 
         <Button
             style="@style/Widget.Material3.Button.ElevatedButton.Icon"
-            android:id="@+id/elevatedButton"
+            android:id="@+id/gSignIn"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:text="@string/sign_in_with_google"
@@ -186,7 +186,7 @@
             android:id="@+id/register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/elevatedButton"
+            android:layout_below="@+id/gSignIn"
             android:text="@string/not_registered_sign_up_now"
             android:layout_centerHorizontal="true"
             android:gravity="center"

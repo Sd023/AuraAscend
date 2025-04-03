@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.sdapps.auraascend">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -16,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AuraAscend"
         tools:targetApi="31">
+        <activity
+            android:name=".view.onboarding.OnboardingActivity"
+            android:exported="false" />
         <activity
             android:name=".view.login.register.RegisterUserActivity"
             android:exported="false" />
@@ -33,7 +37,7 @@
         </activity>
         <activity
             android:name=".SplashScreenActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
 
         <service
             android:name=".core.NotificationServiceFrb"

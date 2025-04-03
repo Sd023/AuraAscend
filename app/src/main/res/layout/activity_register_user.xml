@@ -12,6 +12,7 @@
         android:padding="30dp">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/name"
@@ -20,7 +21,6 @@
             app:boxBackgroundMode="outline">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="48dp"
@@ -28,20 +28,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/username"
-            app:startIconDrawable="@drawable/ic_account"
-            android:layout_marginBottom="20dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etUsername"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="48dp"
-                android:paddingEnd="48dp"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
@@ -49,7 +36,6 @@
             app:endIconMode="password_toggle"
             android:layout_marginBottom="20dp">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
@@ -58,13 +44,13 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etDob"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/date_of_birth"
             app:startIconDrawable="@drawable/ic_calendar_30"
             android:layout_marginBottom="20dp">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etDob"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="date"
@@ -74,13 +60,14 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/phone_number"
             app:startIconDrawable="@drawable/ic_phone"
             android:layout_marginBottom="20dp">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPhone"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
@@ -89,13 +76,14 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
             app:startIconDrawable="@drawable/ic_email"
             android:layout_marginBottom="20dp">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etEmail"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
@@ -145,7 +133,7 @@
 
         <Button
             style="@style/Widget.Material3.Button.ElevatedButton.Icon"
-            android:id="@+id/elevatedButton"
+            android:id="@+id/gSignIn"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:text="@string/sign_in_with_google"
