@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_my_day">
+
+    <fragment
+        android:id="@+id/nav_my_day"
+        android:name="com.sdapps.auraascend.view.home.fragments.DayFragment"
+        android:label="@string/my_day"
+        tools:layout="@layout/fragment_day" />
+
+    <fragment
+        android:id="@+id/nav_activity"
+        android:name="com.sdapps.auraascend.view.home.fragments.FunActivityFragment"
+        android:label="@string/activities"
+        tools:layout="@layout/fragment_fun_activity" />
+
+    <fragment
+        android:id="@+id/nav_stats"
+        android:name="com.sdapps.auraascend.view.home.fragments.StatsFragment"
+        android:label="@string/stats"
+        tools:layout="@layout/fragment_stats" />
+</navigation>

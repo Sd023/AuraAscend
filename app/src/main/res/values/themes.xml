@@ -13,7 +13,6 @@
         <item name="textAppearanceHeadlineMedium">@style/ManropeRegular</item>
         <item name="textAppearanceBodyMedium">@style/Manrope</item>
         <item name="textAppearanceLabelLarge">@style/PlayFairSC</item>
-
     </style>
 
     <style name="PlayFairSC" parent="TextAppearance.Material3.HeadlineMedium">

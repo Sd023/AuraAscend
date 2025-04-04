@@ -23,4 +23,13 @@
     <string name="add_icon">Add icon</string>
     <string name="add_story_of_the_day">Add story of the day</string>
     <string name="next">Next</string>
+    <string name="my_day">My Day</string>
+    <string name="daily_motivation">DAILY MOTIVATION</string>
+    <string name="activities">Activities</string>
+    <string name="stats">Stats</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="quote_icon">Quote Icon</string>
 </resources>

@@ -18,6 +18,10 @@
         android:theme="@style/Theme.AuraAscend"
         tools:targetApi="31">
         <activity
+            android:name=".view.home.navigationView.MainActivity"
+            android:exported="false"
+            android:label="@string/title_activity_main" />
+        <activity
             android:name=".view.onboarding.OnboardingActivity"
             android:exported="false" />
         <activity
