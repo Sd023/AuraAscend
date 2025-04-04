@@ -29,12 +29,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="8dp"
+            style="@style/ManropeRegular"
             android:text="Good"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <CheckBox
             android:id="@+id/checkbox"
+            style="@style/CheckboxTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>

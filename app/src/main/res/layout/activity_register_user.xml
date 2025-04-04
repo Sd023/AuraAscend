@@ -94,6 +94,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSignup"
+            style="@style/CustomButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:text="@string/sign_up"
@@ -131,8 +132,8 @@
         </LinearLayout>
 
 
-        <Button
-            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+        <com.google.android.material.button.MaterialButton
+            style="@style/CustomButtonStyle"
             android:id="@+id/gSignIn"
             android:layout_width="match_parent"
             android:layout_height="60dp"

@@ -1,9 +1,18 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.AuraAscend" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/Beige</item>
+        <item name="colorOnPrimary">@color/Beige</item>
+        <item name="colorPrimaryContainer">@color/Beige</item>
+        <item name="colorOnPrimaryContainer">@color/Beige</item>
     </style>
 
-    <style name="Theme.AuraAscend" parent="Base.Theme.AuraAscend" />
+    <style name="Theme.AuraAscend" parent="Base.Theme.AuraAscend" >
+        <item name="colorPrimary">@color/Beige</item>
+        <item name="colorOnPrimary">@color/Beige</item>
+        <item name="colorPrimaryContainer">@color/Beige</item>
+        <item name="colorOnPrimaryContainer">@color/Beige</item>
+    </style>
 
     <style name="Theme.Splash" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/black</item>

@@ -4,7 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#FFF6EA"
     android:layout_height="match_parent"
     tools:context=".view.login.LoginActivity">
 
@@ -40,6 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Login"
+                    style="@style/ManropeRegular"
                     android:textSize="22sp"
                     android:padding="10dp"
                     android:layout_marginStart="10dp"/>
@@ -57,7 +57,7 @@
                         android:id="@+id/inEmail"
                         android:layout_width="match_parent"
                         android:layout_height="90dp"
-                        android:hint="Email"
+                        android:hint="@string/email"
                         android:padding="5dp"
                         app:endIconMode="clear_text"
                         android:layout_marginBottom="12dp">
@@ -91,16 +91,16 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/loginBtn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Login"
                         android:textColor="@color/White"
-                        android:textSize="22sp"
-                        style="@style/Widget.Material3.Button.ElevatedButton"
+                        android:textSize="18sp"
+                        style="@style/CustomButtonStyle"
                         android:backgroundTint="@color/GoogleSign"
-                        android:layout_marginBottom="10dp"
+                        android:padding="15dp"
                         />
 
 
@@ -127,6 +127,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/continue_as_guest"
+                style="@style/ManropeRegular"
                 android:textSize="22sp"
                 android:padding="10dp"
                 android:layout_marginStart="10dp"/>
@@ -164,8 +165,8 @@
         </LinearLayout>
 
 
-        <Button
-            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+        <com.google.android.material.button.MaterialButton
+            style="@style/CustomButtonStyle"
             android:id="@+id/gSignIn"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -179,8 +180,7 @@
             android:layout_marginEnd="10dp"
             android:gravity="center"
             app:iconGravity="textStart"
-            app:iconTint="@null"
-            android:backgroundTint="@color/GoogleSign"/>
+            app:iconTint="@null" />
 
         <TextView
             android:id="@+id/register"
@@ -189,6 +189,7 @@
             android:layout_below="@+id/gSignIn"
             android:text="@string/not_registered_sign_up_now"
             android:layout_centerHorizontal="true"
+            style="@style/ManropeRegular"
             android:gravity="center"
             android:layout_margin="40dp"
             android:textSize="16sp"

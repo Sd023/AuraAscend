@@ -11,5 +11,15 @@
     <string name="sign_up">Sign Up</string>
     <string name="not_registered_sign_up_now">Not Registered? Sign up Now!</string>
     <string name="default_web_client_id">19631823934-sgbbat3mkg16v2al03jde3skkvqofnet.apps.googleusercontent.com</string>
+    <string name="smile_icon">Smile Icon</string>
+    <string name="my_good_times">My good times</string>
+    <string name="my_happy_times">My happy times</string>
+    <string name="cloud_icon">Cloud Icon</string>
+    <string name="rough_cloud">rough cloud</string>
+    <string name="my_rougher_times">My rougher times</string>
+    <string name="reflect_on_my_life">Reflect on my life</string>
+    <string name="add_icon">Add icon</string>
+    <string name="add_story_of_the_day">Add story of the day</string>
+    <string name="next">Next</string>
 
 </resources>

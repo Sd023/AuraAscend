@@ -3,13 +3,60 @@
     <style name="Base.Theme.AuraAscend" parent="Theme.Material3.DayNight.NoActionBar">
     </style>
 
-    <style name="Theme.AuraAscend" parent="Base.Theme.AuraAscend" />
+    <style name="Theme.AuraAscend" parent="Base.Theme.AuraAscend" >
+        <item name="colorPrimary">@color/Beige</item>
+        <item name="colorOnPrimary">@color/Beige</item>
+        <item name="colorPrimaryContainer">@color/Beige</item>
+        <item name="colorOnPrimaryContainer">@color/Beige</item>
+        <item name="android:colorBackground">#FFF6EA</item>
+
+        <item name="textAppearanceHeadlineMedium">@style/ManropeRegular</item>
+        <item name="textAppearanceBodyMedium">@style/Manrope</item>
+        <item name="textAppearanceLabelLarge">@style/PlayFairSC</item>
+
+    </style>
+
+    <style name="PlayFairSC" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="fontFamily">@font/play_sc</item>
+    </style>
+
+    <style name="Manrope" parent="TextAppearance.Material3.BodyMedium">
+        <item name="fontFamily">@font/manrope</item>
+    </style>
+
+    <style name="ManropeRegular" parent="TextAppearance.Material3.LabelLarge">
+        <item name="fontFamily">@font/manrope_regular</item>
+    </style>
+
 
     <style name="Theme.Splash" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/black</item>
         <item name="android:windowSplashScreenBackground">@color/black</item>
         <item name="android:windowSplashScreenAnimatedIcon">@drawable/logo</item>
         <item name="android:windowSplashScreenIconBackgroundColor">@color/black</item>
+    </style>
+
+    <style name="CustomButtonStyle" parent="Widget.Material3.Button">
+        <item name="shapeAppearance">@style/Shape.MyRoundedButton</item>
+        <item name="backgroundTint">@color/black</item>
+        <item name="fontFamily">@style/Manrope</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="OnboardingButton" parent="Widget.Material3.Button">
+        <item name="shapeAppearance">@style/Shape.MyRoundedButton</item>
+        <item name="backgroundTint">@color/Olive</item>
+        <item name="fontFamily">@style/Manrope</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Shape.MyRoundedButton" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerSize">5dp</item>
+    </style>
+
+    <style name="CheckboxTheme" parent="Widget.Material3.CompoundButton.CheckBox">
+        <item name="buttonTint">@color/Olive</item>
+        <item name="buttonIconTint">@color/white</item>
     </style>
 
 </resources>

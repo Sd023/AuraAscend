@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:gravity="center"
     android:padding="24dp">
@@ -11,22 +12,25 @@
         android:id="@+id/tvQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Placeholder Question"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        style="@style/PlayFairSC"
+        android:text="how are you feeling today? "
+        android:textSize="28sp"
+        android:layout_marginBottom="10dp"
         android:gravity="center"/>
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
 
     <Button
         android:id="@+id/btnContinue"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Continue"
+        style="@style/OnboardingButton"
+        android:text="@string/next"
+        android:textSize="18sp"
         android:layout_marginTop="24dp"/>
 </LinearLayout>

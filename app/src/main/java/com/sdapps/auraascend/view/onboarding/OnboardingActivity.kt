@@ -1,5 +1,6 @@
 package com.sdapps.auraascend.view.onboarding
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -9,17 +10,23 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.database.FirebaseDatabase
-import com.sdapps.auraascend.R
 import com.sdapps.auraascend.databinding.ActivityOnboardingBinding
+import com.sdapps.auraascend.view.home.HomeScreen
+import com.sdapps.auraascend.core.NetworkTools.isNetworkConnected
+import com.sdapps.auraascend.core.SharedPrefHelper
 
-class   OnboardingActivity : AppCompatActivity() {
+class OnboardingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOnboardingBinding
+    private lateinit var spRef: SharedPrefHelper
+    private  var currentUser : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityOnboardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        spRef = SharedPrefHelper(this)
+        currentUser = Firebase.auth.currentUser?.uid
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -43,20 +50,35 @@ class   OnboardingActivity : AppCompatActivity() {
 
     private fun finishOnboarding() {
         Toast.makeText(this, "Onboarding Complete!", Toast.LENGTH_SHORT).show()
-        updateInFRB()
+        if(isNetworkConnected(this)){
+            updateInFRB()
+        } else {
+            Toast.makeText(this, "No internet", Toast.LENGTH_SHORT).show()
+            if(currentUser!!.isNotEmpty()){
+                showCompletion(currentUser!!)
+            }
+        }
     }
 
     private fun updateInFRB(){
-        val currentUser = Firebase.auth.currentUser
         val database = FirebaseDatabase.getInstance()
         val usersRef = database.reference.child("users")
-        val map = mapOf<String, Boolean>("isOnboardComplete" to true)
+        val map = mapOf<String, Boolean>("onboardComplete" to true)
         if(currentUser != null){
-            usersRef.child(currentUser.uid).updateChildren(map).addOnSuccessListener {
-                Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
+            usersRef.child(currentUser!!).updateChildren(map).addOnSuccessListener {
+                showCompletion(currentUser!!)
             }.addOnFailureListener { err ->
-
+                Toast.makeText(this,err.message,Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    private fun showCompletion(uid: String){
+        spRef.setCurrentUser(uid)
+        spRef.setOnboardComplete(true)
+        spRef.setOnBoardCompleteForUser(true)
+
+        startActivity(Intent(this@OnboardingActivity, HomeScreen::class.java))
+        finish()
     }
 }
