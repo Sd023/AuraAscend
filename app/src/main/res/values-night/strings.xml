@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Aura Ascend</string>
     <string name="sign_in_with_google">Sign in with Google</string>
     <string name="continue_as_guest">Continue as Guest</string>
     <string name="name">Name</string>
@@ -11,6 +11,8 @@
     <string name="sign_up">Sign Up</string>
     <string name="not_registered_sign_up_now">Not Registered? Sign up Now!</string>
     <string name="default_web_client_id">19631823934-sgbbat3mkg16v2al03jde3skkvqofnet.apps.googleusercontent.com</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="smile_icon">Smile Icon</string>
     <string name="my_good_times">My good times</string>
     <string name="my_happy_times">My happy times</string>
@@ -25,6 +27,23 @@
     <string name="daily_motivation">DAILY MOTIVATION</string>
     <string name="activities">Activities</string>
     <string name="stats">Stats</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
     <string name="quote_icon">Quote Icon</string>
-
+    <string name="describe_your_day_in_one_sentence_take_the_time_to_think_about_what_has_made_your_day">Describe your day in one sentence. Take the time to think about what has made your day.</string>
+    <string name="what_was_the_reason">What was the reason?</string>
+    <string name="save">Save</string>
+    <string name="like">like</string>
+    <string name="bookmark">bookmark</string>
+    <string name="story_image">story image</string>
+    <string name="zerio">0</string>
+    <string name="activity_completed">Activity Completed</string>
+    <string name="return_to_home">Return to home</string>
+    <string name="game_over">Game Over</string>
+    <string name="high_score">High Score</string>
+    <string name="do_you_want_to_restart">Do you want to restart?</string>
+    <string name="restart">Restart</string>
+    <string name="quit">Quit</string>
 </resources>

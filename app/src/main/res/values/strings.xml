@@ -32,4 +32,18 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="quote_icon">Quote Icon</string>
+    <string name="describe_your_day_in_one_sentence_take_the_time_to_think_about_what_has_made_your_day">Describe your day in one sentence. Take the time to think about what has made your day.</string>
+    <string name="what_was_the_reason">What was the reason?</string>
+    <string name="save">Save</string>
+    <string name="like">like</string>
+    <string name="bookmark">bookmark</string>
+    <string name="story_image">story image</string>
+    <string name="zerio">0</string>
+    <string name="activity_completed">Activity Completed</string>
+    <string name="return_to_home">Return to home</string>
+    <string name="game_over">Game Over</string>
+    <string name="high_score">High Score</string>
+    <string name="do_you_want_to_restart">Do you want to restart?</string>
+    <string name="restart">Restart</string>
+    <string name="quit">Quit</string>
 </resources>

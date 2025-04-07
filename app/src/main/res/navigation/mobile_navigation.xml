@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/nav_my_day"
-        android:name="com.sdapps.auraascend.view.home.fragments.DayFragment"
+        android:name="com.sdapps.auraascend.view.home.fragments.myday.DayFragment"
         android:label="@string/my_day"
         tools:layout="@layout/fragment_day" />
 
     <fragment
         android:id="@+id/nav_activity"
-        android:name="com.sdapps.auraascend.view.home.fragments.FunActivityFragment"
+        android:name="com.sdapps.auraascend.view.home.fragments.funactivity.FunActivityFragment"
         android:label="@string/activities"
         tools:layout="@layout/fragment_fun_activity" />
 

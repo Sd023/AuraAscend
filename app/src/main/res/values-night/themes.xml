@@ -20,5 +20,21 @@
         <item name="android:windowSplashScreenAnimatedIcon">@drawable/logo</item>
         <item name="android:windowSplashScreenIconBackgroundColor">@color/black</item>
     </style>
+    <style name="high_score_text">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">#BFEB1719</item>
+    </style>
+
+    <style name="CustomAlertDialogTheme" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="android:background">@color/WhiteSmoke</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="fontFamily">@font/manrope_regular</item>
+    </style>
+
+    <style name="text_bg">
+        <item name="android:textSize">200sp</item>
+        <item name="android:textColor">#38000000</item>
+    </style>
 
 </resources>

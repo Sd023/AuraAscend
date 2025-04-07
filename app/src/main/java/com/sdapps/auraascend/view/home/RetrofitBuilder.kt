@@ -9,6 +9,9 @@ import retrofit2.http.GET
 interface QuoteAPI {
     @GET("api/random")
     suspend fun getQuote(): DayQuotes
+
+    @GET("api/quotes")
+    suspend fun getAllQuotes(): ArrayList<DayQuotes>
 }
 
 object RetrofitBuilder {

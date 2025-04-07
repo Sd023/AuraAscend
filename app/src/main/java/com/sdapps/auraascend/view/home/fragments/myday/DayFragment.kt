@@ -1,13 +1,13 @@
-package com.sdapps.auraascend.view.home.fragments
+package com.sdapps.auraascend.view.home.fragments.myday
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.sdapps.auraascend.DataViewModel
-import com.sdapps.auraascend.core.DateUtils.getToday
+import com.sdapps.auraascend.core.DateUtils
 import com.sdapps.auraascend.databinding.FragmentDayBinding
 
 class DayFragment : Fragment() {
@@ -32,13 +32,16 @@ class DayFragment : Fragment() {
     }
 
     private fun init(){
-        binding.dateView.text = getToday()
+        binding.dateView.text = DateUtils.getToday()
 
         vm.quote.observe(viewLifecycleOwner) { dayQuotes ->
             binding.quoteText.text = buildString { append(dayQuotes.quote).append(" - ").append(dayQuotes.author) }
         }
         vm.fetchQuote()
 
+        binding.addStory.setOnClickListener {
+            UserEntryDialogFragment().show(requireActivity().supportFragmentManager, UserEntryDialogFragment.UED_DIALOG)
+        }
     }
 
     override fun onDestroyView() {
