@@ -84,7 +84,7 @@ class LoginActivity : AppCompatActivity(), LoginManager.View {
         }
 
         binding.continueAsGuestLayout.setOnClickListener {
-            moveToNextScreen(GUEST)
+            moveToNextScreen(GUEST, false)
         }
 
 
@@ -141,10 +141,10 @@ class LoginActivity : AppCompatActivity(), LoginManager.View {
         }
     }
 
-    override fun moveToNextScreen(isFrom: String) {
+    override fun moveToNextScreen(isFrom: String, isOnboardComplete: Boolean) {
         when(isFrom){
             LOGIN -> {
-                if(spRef.getUserOnboardStatus()){
+                if(spRef.getUserOnboardStatus() && isOnboardComplete){
                    callHomeScreen(isFrom)
                 } else {
                     startOnBoard(isFrom)
@@ -208,7 +208,7 @@ class LoginActivity : AppCompatActivity(), LoginManager.View {
                         spRef.setOnboardComplete(false)
                         spRef.setOnBoardCompleteForUser(false)
                         spRef.setUserLoginType(SIGNINWITHGOOGLE)
-                        moveToNextScreen(SIGNINWITHGOOGLE)
+                        moveToNextScreen(SIGNINWITHGOOGLE, false)
                     }
                 } else {
                     Toast.makeText(this, "Authentication Failed!", Toast.LENGTH_SHORT).show()

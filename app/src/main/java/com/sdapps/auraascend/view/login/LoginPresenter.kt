@@ -2,6 +2,7 @@ package com.sdapps.auraascend.view.login
 
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.sdapps.auraascend.core.SharedPrefHelper
 import com.sdapps.auraascend.view.login.data.Constants.Companion.LOGIN
 
@@ -26,15 +27,30 @@ class LoginPresenter: LoginManager.Presenter {
             val userId = task.user?.uid
             if(userId != null){
                 spRef.setCurrentUser(userId)
-                spRef.setOnBoardCompleteForUser(false)
-                spRef.setOnboardComplete(false)
-                spRef.setUserLoginType(LOGIN)
-                mView.moveToNextScreen(LOGIN)
+                getOnBoardStatus(userId)
             }
         }.addOnFailureListener { err ->
             mView.hideLoading()
             mView.showError(err.message.toString())
-            err.printStackTrace() }
+            err.printStackTrace()
+        }
+    }
+
+    private fun getOnBoardStatus(userId: String) {
+        val database = FirebaseDatabase.getInstance()
+        val usersRef = database.reference.child("users").child(userId)
+        usersRef.child("onboardComplete").get().addOnSuccessListener { dataSnapshot ->
+           val isStatusComplete =  dataSnapshot.getValue(Boolean::class.java) ?: false
+
+            spRef.setOnBoardCompleteForUser(isStatusComplete)
+            spRef.setOnboardComplete(isStatusComplete)
+            spRef.setUserLoginType(LOGIN)
+            mView.moveToNextScreen(LOGIN, isStatusComplete)
+
+        }.addOnFailureListener { err ->
+            mView.showError(err.message.toString())
+
+        }
     }
 
 }

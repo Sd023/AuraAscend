@@ -5,16 +5,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sdapps.auraascend.view.home.QuoteAPI
 import com.sdapps.auraascend.view.home.RetrofitBuilder
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class DataViewModel: ViewModel() {
-    val responses = mutableMapOf<Int, List<String>>()
+    private val _onBoardingResponses = MutableLiveData<MutableMap<String, List<String>>>()
+    val onBoardingResponses : LiveData<MutableMap<String, List<String>>> = _onBoardingResponses
 
-    fun saveResponse(questionIndex: Int, selectedOptions: List<String>) {
-        responses[questionIndex] = selectedOptions
+    fun saveResponse(questionText: String, selectedOptions: List<String>) {
+        val currentMap = _onBoardingResponses.value ?: mutableMapOf()
+        currentMap[questionText] = selectedOptions
+        _onBoardingResponses.value = currentMap
     }
 
     private val _selectedCategories = MutableLiveData<MutableList<Pair<Int, String>>>(mutableListOf())

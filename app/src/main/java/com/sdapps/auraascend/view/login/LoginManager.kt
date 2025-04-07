@@ -9,7 +9,7 @@ interface LoginManager {
     interface View {
         fun showLoading()
         fun hideLoading()
-        fun moveToNextScreen(isFrom: String)
+        fun moveToNextScreen(isFrom: String,isOnboardComplete : Boolean)
         fun showError(msg: String)
     }
 

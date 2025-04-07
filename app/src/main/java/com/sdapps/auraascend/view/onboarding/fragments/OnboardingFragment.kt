@@ -84,7 +84,7 @@ class OnboardingFragment : Fragment() {
 
         btnContinue.setOnClickListener {
             if (selectedOptions.isNotEmpty()) {
-                viewModel.saveResponse(index, selectedOptions)
+                viewModel.saveResponse(questionText, selectedOptions)
                 (activity as? OnboardingActivity)?.moveToNextPage()
             } else {
                 Toast.makeText(requireContext(), "Please select at least one option", Toast.LENGTH_SHORT).show()
