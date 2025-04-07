@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:animateLayoutChanges="true"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:layout_below="@+id/loginLayout"
                     android:padding="10dp">
 
@@ -77,12 +77,11 @@
                         android:id="@+id/inPassword"
                         android:layout_width="match_parent"
                         android:layout_height="90dp"
-                        android:hint="Password"
+                        android:hint="@string/password"
                         app:boxStrokeColor="@color/Olive"
                         app:hintTextColor="@color/Olive"
                         app:passwordToggleEnabled="true"
                         android:padding="5dp"
-                        app:endIconMode="clear_text"
                         android:layout_marginBottom="12dp">
 
                         <com.google.android.material.textfield.TextInputEditText
