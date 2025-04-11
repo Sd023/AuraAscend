@@ -112,7 +112,7 @@ class LoginActivity : AppCompatActivity(), LoginManager.View {
     }
 
     override fun hideLoading() {
-        progressDialog.closePdialog()
+        progressDialog.closePialog()
     }
 
 

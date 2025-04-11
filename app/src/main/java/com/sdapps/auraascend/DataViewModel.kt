@@ -11,9 +11,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class DataViewModel: ViewModel() {
+class DataViewModel : ViewModel() {
     private val _onBoardingResponses = MutableLiveData<MutableMap<String, List<String>>>()
-    val onBoardingResponses : LiveData<MutableMap<String, List<String>>> = _onBoardingResponses
+    val onBoardingResponses: LiveData<MutableMap<String, List<String>>> = _onBoardingResponses
 
     fun saveResponse(questionText: String, selectedOptions: List<String>) {
         val currentMap = _onBoardingResponses.value ?: mutableMapOf()
@@ -21,10 +21,10 @@ class DataViewModel: ViewModel() {
         _onBoardingResponses.value = currentMap
     }
 
-    private val _selectedCategories = MutableLiveData<MutableList<Pair<Int, String>>>(mutableListOf())
-    val selectedCategories: LiveData<MutableList<Pair<Int, String>>> = _selectedCategories
+    private val _selectedCategories =
+        MutableLiveData<MutableList<Pair<Int, String>>>(mutableListOf())
 
-    fun setReasonChip(pair: Pair<Int, String>) {
+    fun setReasonCategories(pair: Pair<Int, String>) {
         val currentList = _selectedCategories.value ?: mutableListOf()
         if (currentList.contains(pair)) {
             Log.d("CHIP", "deleted item : ${pair.first} : ${pair.second}")
@@ -36,10 +36,14 @@ class DataViewModel: ViewModel() {
         _selectedCategories.value = currentList
     }
 
-    private val _selectedEmotion = MutableLiveData<Int>()
-    val selectedEmotion : LiveData<Int> = _selectedEmotion
+    fun getReasonCategories(): MutableList<Pair<Int, String>>? {
+        return _selectedCategories.value
+    }
 
-    fun setEmotion(index: Int){
+    private val _selectedEmotion = MutableLiveData<Int>()
+    val selectedEmotion: LiveData<Int> = _selectedEmotion
+
+    fun setEmotion(index: Int) {
         var currentEmotion = _selectedEmotion.value ?: 0
         currentEmotion = index
         _selectedEmotion.value = currentEmotion
@@ -49,15 +53,25 @@ class DataViewModel: ViewModel() {
         return emotions[_selectedEmotion.value ?: 0]
     }
 
+    private val _emotionLabel = MutableLiveData<String>()
+
+    fun getEmotionLabel(): String? {
+        return _emotionLabel.value
+    }
+
+    fun setEmotionLabel(label: String) {
+        _emotionLabel.value = label
+    }
+
     private val _quote = MutableLiveData<DayQuotes>()
     val quote: LiveData<DayQuotes> = _quote
 
-    fun fetchQuote(){
+    fun fetchQuote() {
         viewModelScope.launch {
             try {
                 val result = RetrofitBuilder.api.getQuote()
                 _quote.postValue(result)
-            }catch (ex: Exception){
+            } catch (ex: Exception) {
                 Log.e("QuoteVM", "Failed: ${ex.message}")
             }
         }
@@ -66,13 +80,13 @@ class DataViewModel: ViewModel() {
     private val _allQuotes = MutableLiveData<ArrayList<DayQuotes>>()
     val allQuotes: LiveData<ArrayList<DayQuotes>> = _allQuotes
 
-    fun fetchAllQuotes(){
+    fun fetchAllQuotes() {
         viewModelScope.launch {
             try {
                 val result = RetrofitBuilder.api.getAllQuotes()
                 _allQuotes.postValue(result)
 
-            }catch (ex:kotlin.Exception){
+            } catch (ex: kotlin.Exception) {
                 ex.message
             }
         }
@@ -93,7 +107,7 @@ class DataViewModel: ViewModel() {
 
 
 data class DayQuotes(
-    val id : Int,
-    val quote : String,
-    val author : String
+    val id: Int,
+    val quote: String,
+    val author: String
 )

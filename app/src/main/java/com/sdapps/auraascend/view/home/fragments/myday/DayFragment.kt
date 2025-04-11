@@ -10,13 +10,13 @@ import com.sdapps.auraascend.DataViewModel
 import com.sdapps.auraascend.core.DateUtils
 import com.sdapps.auraascend.databinding.FragmentDayBinding
 
-class DayFragment : Fragment() {
+class DayFragment : Fragment() , OnDialogDismiss{
 
     private var _binding: FragmentDayBinding? = null
     private val binding get() = _binding!!
 
     private val vm: DataViewModel by viewModels()
-
+    var isClicked = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -40,12 +40,17 @@ class DayFragment : Fragment() {
         vm.fetchQuote()
 
         binding.addStory.setOnClickListener {
-            UserEntryDialogFragment().show(requireActivity().supportFragmentManager, UserEntryDialogFragment.UED_DIALOG)
+            UserEntryDialogFragment(this).show(requireActivity().supportFragmentManager, UserEntryDialogFragment.UED_DIALOG)
+            isClicked = true
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onDialogDismissed() {
+        isClicked = false
     }
 }

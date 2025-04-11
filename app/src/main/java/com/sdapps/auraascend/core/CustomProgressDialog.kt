@@ -20,6 +20,14 @@ class CustomProgressDialog(private val appContext: Context) {
             .setCancelable(false)
             .show()
     }
+
+    fun showAlert(msg: String, listener : DialogInterface.OnClickListener){
+        progressDialog = AlertDialog.Builder(appContext)
+            .setMessage(msg)
+            .setPositiveButton("OK",listener)
+            .setCancelable(false)
+            .show()
+    }
     fun showPDialog(){
         pDialog = ProgressDialog(appContext)
         pDialog?.setTitle("Please wait")
@@ -28,7 +36,17 @@ class CustomProgressDialog(private val appContext: Context) {
         pDialog?.show()
 
     }
-    fun closePdialog(){
+
+    fun showLoadingProgress(msg: String){
+        pDialog = ProgressDialog(appContext)
+        pDialog?.setTitle("Please wait")
+        pDialog?.setMessage(msg)
+        pDialog?.setCancelable(false)
+        pDialog?.show()
+
+    }
+
+    fun closePialog(){
         try {
             if(pDialog!!.isShowing){
                 pDialog!!.dismiss()

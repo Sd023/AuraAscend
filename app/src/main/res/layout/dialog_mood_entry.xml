@@ -5,141 +5,191 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/titleHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/what_are_you_feeling"
-        android:textSize="24sp"
-        style="@style/PlayFairSC"
-        android:textStyle="bold"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="50dp" />
 
-    <LinearLayout
-        android:id="@+id/moodLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/titleHeader"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_margin="10dp"
-        android:layout_gravity="center">
-
-        <ImageView
-            android:id="@+id/very_sad"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="72dp"
-            android:src="@drawable/icon_very_sad" />
-
-        <ImageView
-            android:id="@+id/sad"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="72dp"
-            android:src="@drawable/ic_sad" />
-
-        <ImageView
-            android:id="@+id/normal"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="72dp"
-            android:src="@drawable/ic_normal_smile" />
-
-        <ImageView
-            android:id="@+id/happy"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="72dp"
-            android:src="@drawable/ic_happy"
-         />
-
-        <ImageView
-            android:id="@+id/very_happy"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="72dp"
-            android:src="@drawable/ic_very_happy"/>
-
-    </LinearLayout>
-
-        <TextView
-            android:id="@+id/emotionLabel"
+        <LinearLayout
+            android:id="@+id/completionStatusLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/moodLayout"
-            android:text=""
-            style="@style/ManropeRegular"
-            android:textSize="16sp"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/userEmotionInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginLeft="16dp"
-        style="@style/CardView"
-        app:strokeColor="@color/black"
-        app:strokeWidth="1dp"
-        android:layout_below="@+id/emotionLabel"
-        card_view:cardCornerRadius="12dp"
-        card_view:cardElevation="2dp"
-        android:background="@android:color/white">
 
-        <EditText
-            android:id="@+id/editTextDayEntry"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:hint="@string/describe_your_day_in_one_sentence_take_the_time_to_think_about_what_has_made_your_day"
-            android:background="@android:color/transparent"
-            android:padding="16dp"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:textColorHint="#999999"
-            android:gravity="top"
-            android:inputType="textMultiLine"
-            android:lines="5"
-            android:maxLines="10"
-            android:scrollbars="vertical"/>
-    </com.google.android.material.card.MaterialCardView>
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieAnimationView"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_marginTop="50dp"
+                android:visibility="visible"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="false" />
 
-        <TextView
-            android:id="@+id/reasonHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/what_was_the_reason"
-            android:textSize="24sp"
-            style="@style/PlayFairSC"
-            android:textStyle="bold"
-            android:layout_below="@id/userEmotionInput"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp" />
+            <TextView
+                android:id="@+id/statusMsg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/play_sc"
+                android:gravity="center"
+                android:text="@string/success"
+                android:textSize="30sp"
+                android:visibility="gone" />
 
-        <com.google.android.flexbox.FlexboxLayout
-            android:id="@+id/flexChipContainer"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/finishBtn"
+                style="@style/OnboardingButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_margin="30dp"
+                android:text="@string/close"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/userInputDialog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:flexWrap="wrap"
-            app:justifyContent="flex_start"
-            android:layout_below="@id/reasonHeader"
-            android:padding="16dp"/>
+            android:visibility="visible">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/saveBtn"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_below="@id/flexChipContainer"
-            android:layout_margin="10dp"
-            android:text="@string/save"
-            style="@style/OnboardingButton"/>
+            <TextView
+                android:id="@+id/titleHeader"
+                style="@style/PlayFairSC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="50dp"
+                android:text="@string/what_are_you_feeling"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/moodLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/titleHeader"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/very_sad"
+                    android:layout_width="0dp"
+                    android:layout_height="72dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/icon_very_sad" />
+
+                <ImageView
+                    android:id="@+id/sad"
+                    android:layout_width="0dp"
+                    android:layout_height="72dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_sad" />
+
+                <ImageView
+                    android:id="@+id/normal"
+                    android:layout_width="0dp"
+                    android:layout_height="72dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_normal_smile" />
+
+                <ImageView
+                    android:id="@+id/happy"
+                    android:layout_width="0dp"
+                    android:layout_height="72dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_happy" />
+
+                <ImageView
+                    android:id="@+id/very_happy"
+                    android:layout_width="0dp"
+                    android:layout_height="72dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_very_happy" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/emotionLabel"
+                style="@style/ManropeRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/moodLayout"
+                android:gravity="center"
+                android:text=""
+                android:textSize="16sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/userEmotionInput"
+                style="@style/CardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/emotionLabel"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/white"
+                app:strokeColor="@color/black"
+                app:strokeWidth="1dp"
+                card_view:cardCornerRadius="12dp"
+                card_view:cardElevation="2dp">
+
+                <EditText
+                    android:id="@+id/editTextDayEntry"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="top"
+                    android:hint="@string/describe_your_day_in_one_sentence_take_the_time_to_think_about_what_has_made_your_day"
+                    android:inputType="textMultiLine"
+                    android:lines="5"
+                    android:maxLines="10"
+                    android:padding="16dp"
+                    android:scrollbars="vertical"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="#999999"
+                    android:textSize="16sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/reasonHeader"
+                style="@style/PlayFairSC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/userEmotionInput"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/what_was_the_reason"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/flexChipContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/reasonHeader"
+                android:padding="16dp"
+                app:flexWrap="wrap"
+                app:justifyContent="flex_start" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/saveBtn"
+                style="@style/OnboardingButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@id/flexChipContainer"
+                android:layout_margin="10dp"
+                android:text="@string/save" />
 
 
-
+        </RelativeLayout>
     </RelativeLayout>
+
 </ScrollView>

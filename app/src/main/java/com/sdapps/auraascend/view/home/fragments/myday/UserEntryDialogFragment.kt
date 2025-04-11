@@ -1,31 +1,37 @@
 package com.sdapps.auraascend.view.home.fragments.myday
 
 
+import android.animation.Animator
 import android.content.res.ColorStateList
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
-import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.chip.Chip
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FirebaseFirestore
 import com.sdapps.auraascend.DataViewModel
 import com.sdapps.auraascend.R
+import com.sdapps.auraascend.core.CustomProgressDialog
+import com.sdapps.auraascend.core.NetworkTools
+import com.sdapps.auraascend.core.SharedPrefHelper
 import com.sdapps.auraascend.databinding.DialogMoodEntryBinding
 import kotlinx.coroutines.launch
-import kotlin.getValue
+import java.time.LocalDate
 
-class UserEntryDialogFragment(): DialogFragment() {
+class UserEntryDialogFragment(var onDialogDismissed: OnDialogDismiss) : DialogFragment() {
 
     companion object {
         val UED_DIALOG = "TAG"
@@ -33,11 +39,14 @@ class UserEntryDialogFragment(): DialogFragment() {
 
     private var _binding: DialogMoodEntryBinding? = null
     private val binding get() = _binding!!
-    private lateinit var emotionIcons : List<ImageView>
-    private lateinit var emotionLabels : List<String>
+    private lateinit var smileyEmotionIcons: List<ImageView>
+    private lateinit var smileyEmotionLabels: List<String>
     private lateinit var viewModel: DataViewModel
+    private lateinit var spRef: SharedPrefHelper
 
+    private lateinit var progressDialog: CustomProgressDialog
     private lateinit var classifer: ClassificationModel
+    private var userInput = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +59,7 @@ class UserEntryDialogFragment(): DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = DialogMoodEntryBinding.inflate(layoutInflater)
-
+        prepView()
         init()
         return binding.root
     }
@@ -58,26 +67,32 @@ class UserEntryDialogFragment(): DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         classifer = ClassificationModel(requireContext())
+        spRef = SharedPrefHelper(requireContext())
+        progressDialog = CustomProgressDialog(requireContext())
     }
 
-    fun init(){
-        var isClicked = false
-        emotionIcons = listOf(binding.verySad,binding.sad,binding.normal,binding.happy,binding.veryHappy)
-        emotionLabels = listOf("Very Unpleasant", "Unpleasant", "Neutral", "Pleasant", "Very Pleasant")
+    private fun prepView() {
+        smileyEmotionIcons =
+            listOf(binding.verySad, binding.sad, binding.normal, binding.happy, binding.veryHappy)
+        smileyEmotionLabels =
+            listOf("Very Unpleasant", "Unpleasant", "Neutral", "Pleasant", "Very Pleasant")
 
-        val categories = listOf("💙 Family", "💰 Finance", "🌮 Food", "👯 Friends", "🏥 Health",
-            "📚 Hobbies", "❤️ Relationship", "🏋 Sport", "🌤️ Weather", "💼 Work")
+        val chipCategoriesAffectsEmotion = listOf(
+            "💙 Family", "💰 Finance", "🌮 Food", "👯 Friends", "🏥 Health",
+            "📚 Hobbies", "❤️ Relationship", "🏋 Sport", "🌤️ Weather", "💼 Work"
+        )
 
         val manRopeTypeface = ResourcesCompat.getFont(requireContext(), R.font.manrope_regular)
 
-        categories.forEachIndexed { index, text ->
+        chipCategoriesAffectsEmotion.forEachIndexed { index, text ->
             val chip = Chip(requireContext()).apply {
                 this.text = text
                 isCheckable = true
                 isClickable = true
                 setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
                 setTextColor(ContextCompat.getColor(context, R.color.black))
-                chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.GhostWhite))
+                chipBackgroundColor =
+                    ColorStateList.valueOf(ContextCompat.getColor(context, R.color.GhostWhite))
                 chipStrokeWidth = 1f
                 setChipStrokeColorResource(R.color.LightGrey)
                 this.typeface = manRopeTypeface
@@ -85,12 +100,18 @@ class UserEntryDialogFragment(): DialogFragment() {
                 setOnClickListener {
                     val pair = Pair(index, text)
                     if (isChecked) {
-                        viewModel.setReasonChip(pair)
-                        chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.Olive))
+                        viewModel.setReasonCategories(pair)
+                        chipBackgroundColor =
+                            ColorStateList.valueOf(ContextCompat.getColor(context, R.color.Olive))
                         setTextColor(ContextCompat.getColor(context, R.color.white))
                     } else {
-                        viewModel.setReasonChip(pair)
-                        chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.WhiteSmoke))
+                        viewModel.setReasonCategories(pair)
+                        chipBackgroundColor = ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                context,
+                                R.color.WhiteSmoke
+                            )
+                        )
                         setTextColor(ContextCompat.getColor(context, R.color.black))
                     }
                 }
@@ -107,57 +128,177 @@ class UserEntryDialogFragment(): DialogFragment() {
 
         }
 
-        emotionIcons.forEachIndexed { index, imageView ->
-            emotionIcons[index].colorFilter = getFilter()
+        smileyEmotionIcons.forEachIndexed { index, imageView ->
+            viewModel.setEmotionLabel("")
+            smileyEmotionIcons[index].colorFilter = getFilter()
             imageView.setOnClickListener {
                 handleSmileyClick(index)
             }
         }
 
-        viewModel.emotionResult.observe(viewLifecycleOwner) { emotion ->
-           Log.d("Emotion", emotion)
-            isClicked = false
+    }
+
+    fun init() {
+        viewModel.emotionResult.observe(viewLifecycleOwner) { predtEmotion ->
+            uploadDataToFirebase(predictedEmotion = predtEmotion)
+            Toast.makeText(requireContext(), "You are feeling $predtEmotion", Toast.LENGTH_LONG)
+                .show()
         }
 
 
         binding.saveBtn.setOnClickListener {
-            if(!isClicked){
-                isClicked  = true
-
-                val value = viewModel.getEmotionText(emotionLabels)
-                viewModel.selectedCategories.observe(viewLifecycleOwner) { data ->
-                    for(v in data){
-                        Log.d("SELECTION", "${v.first} ${v.second}")
-                    }
+            userInput = binding.editTextDayEntry.text.toString().lowercase()
+            progressDialog.showLoadingProgress("Saving and Uploading data")
+            if (userInput.isNotEmpty()) {
+                lifecycleScope.launch {
+                    viewModel.predict(classifer, userInput)
                 }
-                Log.d("CHIP", value)
+            } else {
+                uploadDataToFirebase(predictedEmotion = "")
+            }
+        }
+    }
 
-                val userInput = binding.editTextDayEntry.text.toString().lowercase()
+    private fun uploadDataToFirebase(predictedEmotion: String) {
+        if (NetworkTools.isNetworkConnected(requireContext())) {
+            logDailyEmotion(viewModel.getEmotionLabel() ?: "", predictedEmotion)
+        } else {
+            Toast.makeText(
+                requireContext(),
+                "No internet, please connect to network",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
 
-                if (userInput.isNotEmpty()) {
-                    lifecycleScope.launch {
-                        viewModel.predict(classifer,userInput)
-                    }
+    private fun promptUserToDoActivities() {
+
+    }
+
+    private fun logDailyEmotion(userSelectedMood: String, predictedEmotion: String) {
+        try {
+            val fdb = FirebaseFirestore.getInstance()
+            val date = LocalDate.now().toString()
+
+            val serializedDataSet = viewModel.getReasonCategories()?.map {
+                mapOf("reason" to it.second) // we are not using index value to store it in firebase.
+            }
+
+
+            val frbData = hashMapOf(
+                "timestamp" to Timestamp.now(),
+                "date" to date,
+                "userInput" to userInput,
+                "userSelectedMood" to userSelectedMood,
+                "userSelectedCategories" to serializedDataSet,
+                "predictedMood" to predictedEmotion
+            )
+            val currentUser = spRef.getCurrentUser()
+
+            fdb.collection("users")
+                .document(currentUser)
+                .collection("mood_history")
+                .add(frbData)
+                .addOnSuccessListener {
+                    showCompletion(true)
+                }.addOnFailureListener { err ->
+                    showToast(err.message.toString())
+                    showCompletion(false)
                 }
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            showToast(ex.message.toString())
+            showCompletion(false)
+        }
+
+    }
+
+    fun showToast(msg: String) {
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
+    }
+
+    fun handleSmileyClick(selectedIcon: Int) {
+        smileyEmotionIcons.forEachIndexed { index, imageView ->
+            viewModel.setEmotionLabel(smileyEmotionLabels[selectedIcon])
+
+            if (selectedIcon == index) {
+                binding.emotionLabel.text = smileyEmotionLabels[index]
+                imageView.clearColorFilter()
+            } else {
+                viewModel.setEmotion(selectedIcon)
+                smileyEmotionIcons[index].colorFilter = getFilter()
             }
 
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    private fun showCompletion(isCompleted: Boolean) {
+        var animation = R.raw.something_went_wrong
+
+        if (isCompleted) {
+            animation = R.raw.upload_success
+        }
+        progressDialog.closePialog()
+        binding.userInputDialog.visibility = View.GONE
+        binding.completionStatusLayout.visibility = View.VISIBLE
+
+        binding.lottieAnimationView.apply {
+            visibility = View.VISIBLE
+            setAnimation(animation)
+            playAnimation()
+
+            addAnimatorListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(animation: Animator) {}
+
+                override fun onAnimationEnd(animation: Animator) {
+                    showButton()
+                }
+
+                override fun onAnimationCancel(animation: Animator) {}
+
+                override fun onAnimationRepeat(animation: Animator) {}
+
+            })
+        }
     }
 
-    fun handleSmileyClick(selectedIcon : Int){
-        emotionIcons.forEachIndexed { index, imageView ->
-            viewModel.setEmotion(selectedIcon)
-            if(selectedIcon == index){
-                binding.emotionLabel.text = emotionLabels[index]
-                imageView.clearColorFilter()
-            } else {
-                emotionIcons[index].colorFilter = getFilter()
-            }
+    private fun showButton() {
 
+        binding.statusMsg.apply {
+            alpha = 0f
+            scaleX = 0.95f
+            scaleY = 0.95f
+            visibility = View.VISIBLE
+
+            animate()
+                .alpha(1f)
+                .scaleX(1f)
+                .scaleY(1f)
+                .setDuration(300)
+                .setInterpolator(DecelerateInterpolator())
+                .setListener(null)
+                .start()
+
+        }
+
+        binding.finishBtn.apply {
+            alpha = 0f
+            scaleX = 0.95f
+            scaleY = 0.95f
+            visibility = View.VISIBLE
+
+            animate()
+                .alpha(1f)
+                .scaleX(1f)
+                .scaleY(1f)
+                .setDuration(300)
+                .setListener(null)
+                .start()
+
+            setOnClickListener {
+                onDialogDismissed.onDialogDismissed()
+                this@UserEntryDialogFragment.dismiss()
+            }
         }
     }
 
@@ -168,7 +309,6 @@ class UserEntryDialogFragment(): DialogFragment() {
             ViewGroup.LayoutParams.MATCH_PARENT
         )
     }
-
 
     fun getFilter(): ColorMatrixColorFilter {
         val matrix = ColorMatrix()

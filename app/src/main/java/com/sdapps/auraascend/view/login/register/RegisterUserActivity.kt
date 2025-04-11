@@ -25,7 +25,7 @@ import com.sdapps.auraascend.view.login.LoginManager
 import com.sdapps.auraascend.view.login.data.UserBO
 import com.sdapps.auraascend.view.login.googlesignin.GoogleSignInHelper
 
-class RegisterUserActivity : AppCompatActivity(), LoginManager.RegisterView{
+class RegisterUserActivity : AppCompatActivity(), LoginManager.RegisterView {
 
     private lateinit var binding: ActivityRegisterUserBinding
     private lateinit var presenter: RegisterPresenter
@@ -47,13 +47,13 @@ class RegisterUserActivity : AppCompatActivity(), LoginManager.RegisterView{
         init()
     }
 
-    private fun init(){
+    private fun init() {
         auth = Firebase.auth
         googleSignHelper = GoogleSignInHelper(this)
 
         progressDialog = CustomProgressDialog(this)
         presenter = RegisterPresenter()
-        presenter.attachView(this,applicationContext, Firebase.auth)
+        presenter.attachView(this, applicationContext, Firebase.auth)
         binding.btnSignup.setOnClickListener {
             validateAndCreateUser()
         }
@@ -64,21 +64,36 @@ class RegisterUserActivity : AppCompatActivity(), LoginManager.RegisterView{
         }
     }
 
-    private fun validateAndCreateUser(){
+    private fun validateAndCreateUser() {
         clearErrors()
 
         val uname = binding.etName.editText?.text?.trim().toString()
-        val upassword =binding.etPassword.editText?.text?.trim().toString()
+        val upassword = binding.etPassword.editText?.text?.trim().toString()
         val udob = binding.etDob.editText?.text?.trim().toString()
         val uphone = binding.etPhone.editText?.text?.trim().toString()
         val uemail = binding.etEmail.editText?.text?.trim().toString()
 
         when {
-            uname.isEmpty() -> { binding.etName.error = "Name is mandatory" }
-            upassword.length < 6 -> { binding.etPassword.error = "Invalid Password, please use atleast 6 characters"}
-            udob.isEmpty() -> { binding.etDob.error = "Date of birth is mandatory"}
-            uphone.isEmpty() -> { binding.etPhone.error = "Phone is mandatory"}
-            uemail.isNotValid() -> { binding.etEmail.error = "Please enter a valid email"}
+            uname.isEmpty() -> {
+                binding.etName.error = "Name is mandatory"
+            }
+
+            upassword.length < 6 -> {
+                binding.etPassword.error = "Invalid Password, please use atleast 6 characters"
+            }
+
+            udob.isEmpty() -> {
+                binding.etDob.error = "Date of birth is mandatory"
+            }
+
+            uphone.isEmpty() -> {
+                binding.etPhone.error = "Phone is mandatory"
+            }
+
+            uemail.isNotValid() -> {
+                binding.etEmail.error = "Please enter a valid email"
+            }
+
             else -> {
                 val userBO = UserBO().apply {
                     name = uname
@@ -92,16 +107,16 @@ class RegisterUserActivity : AppCompatActivity(), LoginManager.RegisterView{
         }
     }
 
-    private fun String.isNotValid(): Boolean{
+    private fun String.isNotValid(): Boolean {
         return this.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(this).matches()
     }
 
 
-    private fun createUser(userBO: UserBO){
+    private fun createUser(userBO: UserBO) {
         presenter.createUser(userBO)
     }
 
-    private fun clearErrors(){
+    private fun clearErrors() {
         binding.etName.error = null
         binding.etPassword.error = null
         binding.etDob.error = null
@@ -114,11 +129,11 @@ class RegisterUserActivity : AppCompatActivity(), LoginManager.RegisterView{
     }
 
     override fun hideLoading() {
-        progressDialog.closePdialog()
+        progressDialog.closePialog()
     }
 
     override fun moveToNextScreen(isFrom: String) {
-        when(isFrom) {
+        when (isFrom) {
             REGISTER -> {
                 startActivity(Intent(this@RegisterUserActivity, LoginActivity::class.java))
                 finish()
@@ -143,6 +158,7 @@ class RegisterUserActivity : AppCompatActivity(), LoginManager.RegisterView{
             }
         }
     }
+
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
@@ -155,7 +171,8 @@ class RegisterUserActivity : AppCompatActivity(), LoginManager.RegisterView{
                 }
             }
     }
+
     override fun showError(msg: String) {
-       progressDialog.showAlert(msg)
+        progressDialog.showAlert(msg)
     }
 }
