@@ -80,6 +80,12 @@ dependencies {
     implementation("com.google.firebase:firebase-database")
     implementation("com.google.code.gson:gson:2.11.0")
 
+    implementation("org.tensorflow:tensorflow-lite:2.13.0")
+    implementation("org.tensorflow:tensorflow-lite-support:0.4.3")
+    implementation("org.tensorflow:tensorflow-lite-select-tf-ops:2.13.0")
+    implementation("org.tensorflow:tensorflow-lite-task-text:0.3.1")
+
+
     implementation(libs.lottie)
 
 

@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sdapps.auraascend.view.home.RetrofitBuilder
+import com.sdapps.auraascend.view.home.fragments.myday.ClassificationModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
@@ -22,12 +24,8 @@ class DataViewModel: ViewModel() {
     private val _selectedCategories = MutableLiveData<MutableList<Pair<Int, String>>>(mutableListOf())
     val selectedCategories: LiveData<MutableList<Pair<Int, String>>> = _selectedCategories
 
-    private val _reasonChipSelection = MutableLiveData<Pair<Int, String>>()
-    val reasonChipSelection: LiveData<Pair<Int, String>> = _reasonChipSelection
-
     fun setReasonChip(pair: Pair<Int, String>) {
         val currentList = _selectedCategories.value ?: mutableListOf()
-
         if (currentList.contains(pair)) {
             Log.d("CHIP", "deleted item : ${pair.first} : ${pair.second}")
             currentList.remove(pair)
@@ -35,20 +33,20 @@ class DataViewModel: ViewModel() {
             Log.d("CHIP", "Added item : ${pair.first} : ${pair.second}")
             currentList.add(pair)
         }
-
         _selectedCategories.value = currentList
-        _reasonChipSelection.value = pair
     }
 
     private val _selectedEmotion = MutableLiveData<Int>()
     val selectedEmotion : LiveData<Int> = _selectedEmotion
 
     fun setEmotion(index: Int){
-        _selectedEmotion.value = index
+        var currentEmotion = _selectedEmotion.value ?: 0
+        currentEmotion = index
+        _selectedEmotion.value = currentEmotion
     }
 
     fun getEmotionText(emotions: List<String>): String {
-        return emotions.get(_selectedEmotion.value ?: 0)
+        return emotions[_selectedEmotion.value ?: 0]
     }
 
     private val _quote = MutableLiveData<DayQuotes>()
@@ -80,6 +78,15 @@ class DataViewModel: ViewModel() {
         }
     }
 
+    private val _emotionResult = MutableLiveData<String>()
+    val emotionResult: LiveData<String> = _emotionResult
+
+    fun predict(classifier: ClassificationModel, text: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = classifier.predictEmotion(text)
+            _emotionResult.postValue(result)
+        }
+    }
 
 
 }

@@ -46,4 +46,5 @@
     <string name="do_you_want_to_restart">Do you want to restart?</string>
     <string name="restart">Restart</string>
     <string name="quit">Quit</string>
+    <string name="what_are_you_feeling">What are you feeling?</string>
 </resources>
