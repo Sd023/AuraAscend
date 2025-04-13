@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.sdapps.auraascend.DataViewModel
+import com.sdapps.auraascend.core.SharedPrefHelper
 import com.sdapps.auraascend.databinding.FragmentSwipeQuoteBinding
 import com.sdapps.auraascend.view.home.fragments.OnBackPress
 import kotlin.math.abs
@@ -17,12 +18,14 @@ class SwipeQuote : Fragment() {
 
     private lateinit var _binding: FragmentSwipeQuoteBinding
     private val binding get() = _binding
+    private lateinit var spRef : SharedPrefHelper
 
     private val dm: DataViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dm.fetchQuote()
+        spRef = SharedPrefHelper(requireContext())
     }
 
     override fun onCreateView(
@@ -46,7 +49,7 @@ class SwipeQuote : Fragment() {
 
         dm.allQuotes.observe(viewLifecycleOwner) { quotes ->
             if(quotes.isNotEmpty()){
-                val adapter = SwipeQuoteAdapter(quotes)
+                val adapter = SwipeQuoteAdapter(quotes,spRef)
                 binding.quotePager.adapter = adapter
                 binding.quotePager.setPageTransformer(transformer)
             }

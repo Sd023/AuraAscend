@@ -10,7 +10,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sdapps.auraascend.DataViewModel
 import com.sdapps.auraascend.R
 import com.sdapps.auraascend.core.SharedPrefHelper
 import com.sdapps.auraascend.databinding.FragmentFunActivityBinding
@@ -28,7 +31,6 @@ data class FunActivities (
     val activityTagLine: String
 )
 class FunActivityFragment : Fragment() {
-
     companion object {
         const val SWIPEAQUOTE = "SAQ"
         const val MINDFULNESS = "BREATHE"
@@ -82,6 +84,7 @@ class FunActivityFragment : Fragment() {
     }
 
     private fun onActivityCalled(moduleCode: String){
+        addCount()
         when(moduleCode){
             SWIPEAQUOTE -> {
                 binding.activityRV.visibility = View.GONE
@@ -104,6 +107,15 @@ class FunActivityFragment : Fragment() {
                 startActivity(Intent(requireActivity(), PaddlePlay::class.java))
             }
         }
+    }
+
+    private fun addCount(){
+        var count =1
+        val pastAch = spRef.getAllActivites()
+        if(pastAch > 0){
+            count += pastAch
+        }
+        spRef.setAllActivity(count)
     }
 
     override fun onResume() {

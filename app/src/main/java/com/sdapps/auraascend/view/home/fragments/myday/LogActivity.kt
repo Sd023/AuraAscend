@@ -143,7 +143,7 @@ class LogActivity : AppCompatActivity() {
                 userSelectedMood = userSelectedMood,
                 predictedMood = predictedMood,
                 userSelectedCategories = categoriesJoined,
-                timestamp = timestamp.toString()
+                timestamp = timestamp
             )
         } catch (e: Exception) {
             e.printStackTrace()

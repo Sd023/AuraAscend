@@ -5,10 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.Firebase
+import com.google.firebase.database.database
 import com.sdapps.auraascend.core.room.EmotionDao
 import com.sdapps.auraascend.core.room.EmotionEntity
 import com.sdapps.auraascend.view.home.RetrofitBuilder
 import com.sdapps.auraascend.view.home.fragments.myday.ClassificationModel
+import com.sdapps.auraascend.view.login.data.UserBO
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -129,8 +132,70 @@ class DataViewModel : ViewModel() {
         viewModelScope.launch {
            _moods.value =  dao.getMoodsByLabels(whereCondition)
         }
-
     }
+
+    private val _dailyMoodData = MutableLiveData<Map<String, Int>>()
+    val dailyMoodData: LiveData<Map<String, Int>> = _dailyMoodData
+
+    private val moodLabelToInt = mapOf(
+        "sadness" to 0,
+        "joy" to 1,
+        "love" to 2,
+        "anger" to 3,
+        "fear" to 4,
+        "surprise" to 5
+    )
+
+    fun loadDominantMoods(dao: EmotionDao,startDate: String, endDate: String) {
+        viewModelScope.launch {
+            val entries = dao.getEntriesBetween(startDate, endDate)
+            val grouped: Map<String, Int> = entries
+                .groupBy { it.date }
+                .mapValues { (_, moods) ->
+                    moods.groupingBy { moodLabelToInt[it.predictedMood] ?: -1 }
+                        .eachCount()
+                        .maxByOrNull { it.value }
+                        ?.key ?: -1
+                }
+
+            _dailyMoodData.postValue(grouped)
+        }
+    }
+
+    private val _allMoodEntries = MutableLiveData<List<EmotionEntity>>()
+    val allMoodEntries: LiveData<List<EmotionEntity>> = _allMoodEntries
+
+    fun getChartData(dao: EmotionDao){
+        viewModelScope.launch {
+            _allMoodEntries.postValue(dao.getAllEntries())
+        }
+    }
+
+
+    private val _profileBO = MutableStateFlow<UserBO>(UserBO())
+    val profileBO: StateFlow<UserBO> get() = _profileBO
+
+    fun fetchProfileConfigs(userId: String){
+        viewModelScope.launch {
+            //name,phone,dob
+            Firebase.database.getReference("users").child(userId)
+                .get().addOnSuccessListener { snapshot ->
+                    val usr_name = snapshot.child("name").value.toString()
+                    val usr_phone = snapshot.child("phoneNumber").value.toString()
+                    val usr_email = snapshot.child("email").value.toString()
+                    val usr_dob = snapshot.child("dateOfBirth").value.toString()
+
+                    val bo = UserBO().apply {
+                        userName = usr_name
+                        phoneNumber = usr_phone
+                        email = usr_email
+                        dateOfBirth = usr_dob
+                    }
+                    _profileBO.value = bo
+                }
+        }
+    }
+
 
 }
 

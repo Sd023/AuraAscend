@@ -7,9 +7,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.sdapps.auraascend.DayQuotes
 import com.sdapps.auraascend.R
+import com.sdapps.auraascend.core.SharedPrefHelper
 import com.sdapps.auraascend.databinding.SwipeaquoteItemBinding
 
-class SwipeQuoteAdapter(private val quotesList: ArrayList<DayQuotes>):  RecyclerView.Adapter<SwipeQuoteAdapter.QuoteViewHolder>() {
+class SwipeQuoteAdapter(private val quotesList: ArrayList<DayQuotes>,val spRef: SharedPrefHelper):  RecyclerView.Adapter<SwipeQuoteAdapter.QuoteViewHolder>() {
 
     class QuoteViewHolder(binding: SwipeaquoteItemBinding): RecyclerView.ViewHolder(binding.root) {
         var quoteText : TextView = binding.quoteText
@@ -31,9 +32,16 @@ class SwipeQuoteAdapter(private val quotesList: ArrayList<DayQuotes>):  Recycler
         holder.quoteText.text = quotes.quote
         var isLiked = false
         var isBookMarked = false
-
+        val pastach = spRef.getQuotesRead()
         holder.likeIcon.setOnClickListener {
             isLiked = !isLiked
+            if(isLiked){
+                spRef.setQuotesLiked(pastach + 1)
+            } else {
+                if(spRef.getQuotesRead() != 0 && spRef.getQuotesRead() < 0) {
+                    spRef.setQuotesLiked(pastach -1)
+                }
+            }
             holder.likeIcon.setImageResource(if(isLiked) R.drawable.ic_like else R.drawable.ic_like_outline)
         }
 

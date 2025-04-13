@@ -10,7 +10,7 @@ import androidx.room.Query
 @Entity(tableName = "EmotionEntity")
 data class EmotionEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val timestamp: String = "",
+    val timestamp: Long = 0L,
     val date: String = "",
     val userInput: String ="",
     val userSelectedMood: String = "",
@@ -33,4 +33,10 @@ interface EmotionDao {
 
     @Query("DELETE FROM EmotionEntity")
     suspend fun clearAll()
+
+    @Query("SELECT * FROM EmotionEntity WHERE date BETWEEN :startDate AND :endDate")
+    suspend fun getEntriesBetween(startDate: String, endDate: String): List<EmotionEntity>
+
+    @Query("SELECT * FROM EmotionEntity")
+    suspend fun getAllEntries(): List<EmotionEntity>
 }

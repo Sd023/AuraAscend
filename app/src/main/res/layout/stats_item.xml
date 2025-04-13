@@ -5,7 +5,7 @@
     app:cardElevation="4dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="15dp">
+    android:layout_margin="5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,8 +18,7 @@
             android:id="@+id/imageIcon"
             app:tint="@color/Olive"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_activity" />
+            android:layout_height="40dp" />
 
         <TextView
             android:id="@+id/statsActivityName"
@@ -41,7 +40,8 @@
             android:text="@string/zerio"
             android:textColor="@android:color/black"
             android:textSize="16sp"
-            android:layout_toEndOf="@id/statsActivityName"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

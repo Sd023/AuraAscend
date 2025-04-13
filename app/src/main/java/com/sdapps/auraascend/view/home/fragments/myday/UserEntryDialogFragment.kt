@@ -194,7 +194,7 @@ class UserEntryDialogFragment(var onDialogDismissed: OnDialogDismiss) : DialogFr
                 mapOf("reason" to it.second) // we are not using index value to store it in firebase.
             }
             val insertQuery = EmotionEntity(
-                timestamp = System.currentTimeMillis().toString(),
+                timestamp = System.currentTimeMillis(),
                 date = date,
                 userInput = userInput,
                 userSelectedMood = userSelectedMood,

@@ -7,9 +7,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.sdapps.auraascend.R
+import com.sdapps.auraascend.core.SharedPrefHelper
 
 
-class StatsAdapter(val items: ArrayList<StatsBO>) : RecyclerView.Adapter<StatsAdapter.StatsViewHolder>(){
+class StatsAdapter(val spRef: SharedPrefHelper,val items: ArrayList<StatsBO>) : RecyclerView.Adapter<StatsAdapter.StatsViewHolder>(){
 
     class StatsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val statsIcon : ImageView = itemView.findViewById(R.id.imageIcon)
@@ -29,7 +30,11 @@ class StatsAdapter(val items: ArrayList<StatsBO>) : RecyclerView.Adapter<StatsAd
         val achievement = items[position]
         holder.statsIcon.setImageDrawable(achievement.statsIcon)
         holder.activityName.text = achievement.statsName
-        holder.activityAcheived.text = achievement.statsAchievement
+        if(achievement.statsName.equals("Story Time")){
+            holder.activityAcheived.text = "${achievement.statsAchievement} / ${spRef.getTotalStories()}"
+        } else {
+            holder.activityAcheived.text = "${achievement.statsAchievement}"
+        }
     }
 
     override fun getItemCount(): Int {

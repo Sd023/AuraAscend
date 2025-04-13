@@ -21,7 +21,7 @@
     <string name="my_rougher_times">My rougher times</string>
     <string name="reflect_on_my_life">Reflect on my life</string>
     <string name="add_icon">Add icon</string>
-    <string name="add_story_of_the_day">Add story of the day</string>
+    <string name="add_story_of_the_day">Log Today!</string>
     <string name="next">Next</string>
     <string name="my_day">My Day</string>
     <string name="daily_motivation">DAILY MOTIVATION</string>
@@ -50,4 +50,7 @@
     <string name="close">Close</string>
     <string name="success">Data Created Successfully</string>
     <string name="my_neutral_days">My neutral days</string>
+    <string name="achievements">Achievements</string>
+    <string name="profile">profile</string>
+    <string name="log_out">Log Out</string>
 </resources>

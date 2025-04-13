@@ -44,6 +44,9 @@ class DayFragment : Fragment() , OnDialogDismiss{
             UserEntryDialogFragment(this).show(requireActivity().supportFragmentManager, UserEntryDialogFragment.UED_DIALOG)
             isClicked = true
         }
+        binding.profileView.setOnClickListener {
+            startActivity(Intent(requireActivity(), ProfileActivity::class.java))
+        }
 
         binding.goodDayCard.setOnClickListener { openActivity(HAPPY) }
         binding.neutralDayCard.setOnClickListener { openActivity(NEUTRAL) }
