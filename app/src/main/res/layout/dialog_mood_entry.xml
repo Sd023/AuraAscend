@@ -144,7 +144,7 @@
                 <EditText
                     android:id="@+id/editTextDayEntry"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="120dp"
                     android:background="@android:color/transparent"
                     android:gravity="top"
                     android:hint="@string/describe_your_day_in_one_sentence_take_the_time_to_think_about_what_has_made_your_day"

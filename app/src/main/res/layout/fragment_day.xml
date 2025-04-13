@@ -166,10 +166,12 @@
                 android:layout_below="@id/reflectTitle">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/goodDayCard"
                     android:layout_width="0dp"
                     android:layout_height="152dp"
                     android:layout_marginEnd="12dp"
                     android:layout_weight="2"
+                    android:clickable="true"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="4dp">
 
@@ -201,9 +203,11 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/neutralDayCard"
                     android:layout_width="0dp"
                     android:layout_height="152dp"
                     android:layout_weight="2"
+                    android:clickable="true"
                     android:layout_marginEnd="12dp"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="4dp">
@@ -224,7 +228,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="@string/my_happy_times"
+                            android:text="@string/my_neutral_days"
                             android:ems="4"
                             style="@style/ManropeRegular"
                             android:maxLines="2"
@@ -236,9 +240,11 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/roughDayCard"
                     android:layout_width="0dp"
                     android:layout_height="152dp"
                     app:cardCornerRadius="12dp"
+                    android:clickable="true"
                     android:layout_weight="2"
                     app:cardElevation="4dp">
 

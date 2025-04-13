@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/nav_stats"
-        android:name="com.sdapps.auraascend.view.home.fragments.StatsFragment"
+        android:name="com.sdapps.auraascend.view.home.fragments.stats.StatsFragment"
         android:label="@string/stats"
         tools:layout="@layout/fragment_stats" />
 </navigation>

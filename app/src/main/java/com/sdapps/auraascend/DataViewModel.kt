@@ -5,9 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sdapps.auraascend.core.room.EmotionDao
+import com.sdapps.auraascend.core.room.EmotionEntity
 import com.sdapps.auraascend.view.home.RetrofitBuilder
 import com.sdapps.auraascend.view.home.fragments.myday.ClassificationModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
@@ -39,6 +43,15 @@ class DataViewModel : ViewModel() {
     fun getReasonCategories(): MutableList<Pair<Int, String>>? {
         return _selectedCategories.value
     }
+
+    fun getReasons(): String? {
+        val reasonList = arrayListOf<String>()
+        _selectedCategories.value?.map {
+            reasonList.add(it.second)
+        }
+        return reasonList.joinToString(",")
+    }
+
 
     private val _selectedEmotion = MutableLiveData<Int>()
     val selectedEmotion: LiveData<Int> = _selectedEmotion
@@ -102,6 +115,22 @@ class DataViewModel : ViewModel() {
         }
     }
 
+
+    private val _moods = MutableStateFlow<List<EmotionEntity>>(emptyList())
+    val moods: StateFlow<List<EmotionEntity>> get() = _moods
+
+    fun insertIntoDB(emotion: EmotionEntity, dao: EmotionDao){
+        viewModelScope.launch {
+            dao.insertMood(emotion)
+        }
+    }
+
+    fun getEmotionsFromDB(dao: EmotionDao, whereCondition: List<String>){
+        viewModelScope.launch {
+           _moods.value =  dao.getMoodsByLabels(whereCondition)
+        }
+
+    }
 
 }
 

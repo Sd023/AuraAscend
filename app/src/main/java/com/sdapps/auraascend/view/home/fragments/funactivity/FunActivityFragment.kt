@@ -9,11 +9,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sdapps.auraascend.R
+import com.sdapps.auraascend.core.SharedPrefHelper
 import com.sdapps.auraascend.databinding.FragmentFunActivityBinding
+import com.sdapps.auraascend.view.home.fragments.OnBackPress
 import com.sdapps.auraascend.view.home.fragments.funactivity.mindfulness.MindfulnessActivity
 import com.sdapps.auraascend.view.home.fragments.funactivity.paddleplay.PaddlePlay
 import com.sdapps.auraascend.view.home.fragments.funactivity.storytime.StoryTimeActivity
@@ -39,9 +40,12 @@ class FunActivityFragment : Fragment() {
     private var _binding: FragmentFunActivityBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var spRef : SharedPrefHelper
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("DHANUSH", "onCreate")
+        spRef = SharedPrefHelper(requireContext())
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Log.d("DHANUSH", "onCreatedView")
@@ -56,7 +60,7 @@ class FunActivityFragment : Fragment() {
     }
     private fun init(){
         val mCtx = requireContext()
-        val gameSharedPreference = mCtx.getSharedPreferences("HighScorePref", Context.MODE_PRIVATE)
+        val gameSharedPreference = mCtx.getSharedPreferences(SharedPrefHelper.SP_NAME, Context.MODE_PRIVATE)
         val gameHighScore = gameSharedPreference.getInt("HIGH_SCORE",0)
 
 

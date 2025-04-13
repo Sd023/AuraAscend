@@ -13,12 +13,24 @@ class SharedPrefHelper(context: Context) {
         const val CURRENT_USER = "current_user"
         const val ONBOARD_COMPLETE = "onboard_complete"
         const val USER_TYPE = "user_type"
+
+        const val HIGH_SCORE = "HIGH_SCORE"
+        const val STORIES_READ = "STORES_READ"
+        const val QUOTES_READ = "QUOTES_READ"
+        const val ALL_ACTIVITY = "ALL_ACTIVITY"
     }
     init {
         spRef =  context.getSharedPreferences(SP_NAME, MODE_PRIVATE)
     }
 
+    fun getHighScore(): Int { return spRef.getInt(HIGH_SCORE,0) }
+    fun getStoriesReadCount(): Int { return spRef.getInt(STORIES_READ, 0) }
+    fun getQuotesRead(): Int { return spRef.getInt(QUOTES_READ, 0)}
+    fun getAllActivites(): Int { return spRef.getInt(ALL_ACTIVITY, 0) }
 
+    fun setAllActivity(ach: Int){
+        spRef.edit().putInt(ALL_ACTIVITY,ach).apply()
+    }
     fun setUserLoginType(type: String){
         spRef.edit().putString(USER_TYPE,type).apply()
     }

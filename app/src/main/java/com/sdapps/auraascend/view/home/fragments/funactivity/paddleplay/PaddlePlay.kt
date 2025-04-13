@@ -16,6 +16,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.sdapps.auraascend.R
 import com.sdapps.auraascend.core.CustomProgressDialog
+import com.sdapps.auraascend.core.SharedPrefHelper
 import com.sdapps.auraascend.databinding.ActivityPaddlePlayBinding
 import com.sdapps.auraascend.view.home.fragments.funactivity.paddleplay.PaddleView.Companion.PADDLE_WIDTH
 
@@ -47,7 +48,7 @@ class PaddlePlay : AppCompatActivity(), BallView.OnGameOverListener {
             statusBarColor = android.graphics.Color.TRANSPARENT
         }
         highScoreSharedPreference =
-            applicationContext.getSharedPreferences("HighScorePref", MODE_PRIVATE)
+            applicationContext.getSharedPreferences(SharedPrefHelper.SP_NAME, MODE_PRIVATE)
         spEditor = highScoreSharedPreference.edit()
         setupHighScore()
         binding.ball.setUpGameOver(this)

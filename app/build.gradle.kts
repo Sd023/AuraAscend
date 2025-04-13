@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("com.google.gms.google-services")
+    id("kotlin-kapt")
 }
 
 android {
@@ -41,6 +42,8 @@ android {
 }
 
 dependencies {
+    val rootVersion = "2.7.0"
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -85,10 +88,12 @@ dependencies {
     implementation("org.tensorflow:tensorflow-lite-select-tf-ops:2.13.0")
     implementation("org.tensorflow:tensorflow-lite-task-text:0.3.1")
 
-
+    implementation("androidx.room:room-runtime:$rootVersion")
+    implementation("androidx.room:room-ktx:$rootVersion")
+    kapt("androidx.room:room-compiler:$rootVersion")
     implementation(libs.lottie)
 
-
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
 
 }

@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.sdapps.auraascend.DataViewModel
 import com.sdapps.auraascend.databinding.FragmentSwipeQuoteBinding
+import com.sdapps.auraascend.view.home.fragments.OnBackPress
 import kotlin.math.abs
 
 class SwipeQuote : Fragment() {
@@ -16,7 +17,6 @@ class SwipeQuote : Fragment() {
 
     private lateinit var _binding: FragmentSwipeQuoteBinding
     private val binding get() = _binding
-
 
     private val dm: DataViewModel by viewModels()
 

@@ -6,6 +6,7 @@ import android.content.res.ColorStateList
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
+import android.text.InputFilter
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +28,9 @@ import com.sdapps.auraascend.R
 import com.sdapps.auraascend.core.CustomProgressDialog
 import com.sdapps.auraascend.core.NetworkTools
 import com.sdapps.auraascend.core.SharedPrefHelper
+import com.sdapps.auraascend.core.room.AppDatabase
+import com.sdapps.auraascend.core.room.EmotionDao
+import com.sdapps.auraascend.core.room.EmotionEntity
 import com.sdapps.auraascend.databinding.DialogMoodEntryBinding
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -47,6 +51,8 @@ class UserEntryDialogFragment(var onDialogDismissed: OnDialogDismiss) : DialogFr
     private lateinit var progressDialog: CustomProgressDialog
     private lateinit var classifer: ClassificationModel
     private var userInput = ""
+    private lateinit var appDB : AppDatabase
+    private lateinit var dao : EmotionDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,9 +75,12 @@ class UserEntryDialogFragment(var onDialogDismissed: OnDialogDismiss) : DialogFr
         classifer = ClassificationModel(requireContext())
         spRef = SharedPrefHelper(requireContext())
         progressDialog = CustomProgressDialog(requireContext())
+        appDB = AppDatabase.getDatabase(requireContext())
+        dao = appDB.getAppDAO()
     }
 
     private fun prepView() {
+        binding.editTextDayEntry.filters = arrayOf(InputFilter.LengthFilter(100))
         smileyEmotionIcons =
             listOf(binding.verySad, binding.sad, binding.normal, binding.happy, binding.veryHappy)
         smileyEmotionLabels =
@@ -177,13 +186,22 @@ class UserEntryDialogFragment(var onDialogDismissed: OnDialogDismiss) : DialogFr
 
     private fun logDailyEmotion(userSelectedMood: String, predictedEmotion: String) {
         try {
+            val reasons = viewModel.getReasons()
             val fdb = FirebaseFirestore.getInstance()
             val date = LocalDate.now().toString()
 
             val serializedDataSet = viewModel.getReasonCategories()?.map {
                 mapOf("reason" to it.second) // we are not using index value to store it in firebase.
             }
-
+            val insertQuery = EmotionEntity(
+                timestamp = System.currentTimeMillis().toString(),
+                date = date,
+                userInput = userInput,
+                userSelectedMood = userSelectedMood,
+                userSelectedCategories = reasons,
+                predictedMood = predictedEmotion
+            )
+            viewModel.insertIntoDB(insertQuery,dao)
 
             val frbData = hashMapOf(
                 "timestamp" to Timestamp.now(),

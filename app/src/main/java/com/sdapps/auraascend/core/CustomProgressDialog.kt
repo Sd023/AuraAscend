@@ -55,14 +55,4 @@ class CustomProgressDialog(private val appContext: Context) {
             ex.printStackTrace()
         }
     }
-    fun dismissDialog() {
-        try {
-            if (progressDialog!!.isShowing) {
-                progressDialog!!.dismiss()
-            }
-        }catch (ex: Exception){
-            ex.printStackTrace()
-        }
-
-    }
 }

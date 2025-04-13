@@ -1,5 +1,6 @@
 package com.sdapps.auraascend.view.home.fragments.myday
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -43,6 +44,16 @@ class DayFragment : Fragment() , OnDialogDismiss{
             UserEntryDialogFragment(this).show(requireActivity().supportFragmentManager, UserEntryDialogFragment.UED_DIALOG)
             isClicked = true
         }
+
+        binding.goodDayCard.setOnClickListener { openActivity(HAPPY) }
+        binding.neutralDayCard.setOnClickListener { openActivity(NEUTRAL) }
+        binding.roughDayCard.setOnClickListener { openActivity(ROUGH) }
+    }
+
+    private fun openActivity(isFrom : String){
+        val intent = Intent(requireActivity(), LogActivity::class.java)
+        intent.putExtra("moduleCode", isFrom)
+        requireContext().startActivity(intent)
     }
 
     override fun onDestroyView() {
@@ -52,5 +63,11 @@ class DayFragment : Fragment() , OnDialogDismiss{
 
     override fun onDialogDismissed() {
         isClicked = false
+    }
+
+    companion object {
+        const val HAPPY = "happy"
+        const val NEUTRAL = "neutral"
+        const val ROUGH = "rough"
     }
 }
