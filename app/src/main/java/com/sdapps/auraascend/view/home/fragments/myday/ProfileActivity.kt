@@ -16,6 +16,8 @@ import com.sdapps.auraascend.DataViewModel
 import com.sdapps.auraascend.R
 import com.sdapps.auraascend.core.CustomProgressDialog
 import com.sdapps.auraascend.core.SharedPrefHelper
+import com.sdapps.auraascend.core.room.AppDatabase
+import com.sdapps.auraascend.core.room.EmotionDao
 import com.sdapps.auraascend.databinding.ActivityProfileBinding
 import com.sdapps.auraascend.view.login.LoginActivity
 import com.sdapps.auraascend.view.login.data.UserBO
@@ -30,6 +32,8 @@ class ProfileActivity : AppCompatActivity() {
     private val viewModel: DataViewModel by viewModels()
     private lateinit var sharedPref : SharedPrefHelper
     private lateinit var progressDialog: CustomProgressDialog
+    private lateinit var appDatabase: AppDatabase
+    private lateinit var dao : EmotionDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +42,8 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
         sharedPref = SharedPrefHelper(this)
         progressDialog = CustomProgressDialog(this)
+        appDatabase = AppDatabase.getDatabase(this)
+        dao = appDatabase.getAppDAO()
         viewCreate()
     }
 
@@ -80,6 +86,9 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun clearSP(){
         sharedPref.clearSp()
+        lifecycleScope.launch {
+            dao.clearAll()
+        }
         val intent = Intent(this, LoginActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
