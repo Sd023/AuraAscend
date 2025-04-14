@@ -1,5 +1,8 @@
 package com.sdapps.auraascend.view.home.fragments.funactivity.spotify
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -18,6 +21,7 @@ import com.sdapps.auraascend.databinding.ActivitySpotifyBinding
 import com.sdapps.auraascend.view.home.PodcastAdapter
 import com.sdapps.auraascend.view.home.spotify.PodcastShow
 import kotlin.getValue
+import androidx.core.net.toUri
 
 class SpotifyActivity : AppCompatActivity() {
 
@@ -51,11 +55,28 @@ class SpotifyActivity : AppCompatActivity() {
     private fun init(){
         binding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
         val adapter = PodcastAdapter(itemList!!){
-            Log.d("Clicked", it)
+            openSpotifyAndPlay(this,it)
         }
         binding.recyclerView.adapter = adapter
     }
 
+
+
+    fun openSpotifyAndPlay(context: Context, spotifyUri: String) {
+        val intent = Intent(Intent.ACTION_VIEW, spotifyUri.toUri())
+
+        val packageManager = context.packageManager
+        val activities = packageManager.queryIntentActivities(intent, 0)
+
+        if (activities.isNotEmpty()) {
+            context.startActivity(intent)
+        } else {
+            Toast.makeText(context, "Spotify is not installed", Toast.LENGTH_SHORT).show()
+            val playStoreIntent = Intent(Intent.ACTION_VIEW,
+                "market://details?id=com.spotify.music".toUri())
+            context.startActivity(playStoreIntent)
+        }
+    }
 
     private fun showToast(msg: String){
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()

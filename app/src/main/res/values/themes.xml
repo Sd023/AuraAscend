@@ -45,6 +45,7 @@
     <style name="CustomAlertDialogTheme" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="android:background">@color/WhiteSmoke</item>
         <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:textColor">@color/Olive</item>
         <item name="fontFamily">@font/manrope_regular</item>
     </style>
     <style name="text_bg">

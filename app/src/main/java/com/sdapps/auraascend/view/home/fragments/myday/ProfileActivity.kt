@@ -66,7 +66,7 @@ class ProfileActivity : AppCompatActivity() {
         progressDialog.closePialog()
 
         binding.btnLogout.setOnClickListener {
-            progressDialog.showAlert("Do you want to log-out?", object : DialogInterface.OnClickListener{
+            progressDialog.showThemedDialog("Do you want to log-out?", object : DialogInterface.OnClickListener{
                 override fun onClick(dialog: DialogInterface?, which: Int) {
                     Firebase.auth.signOut()
                     clearSP()

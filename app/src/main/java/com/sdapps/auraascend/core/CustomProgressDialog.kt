@@ -4,6 +4,8 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import com.sdapps.auraascend.R
 
 class CustomProgressDialog(private val appContext: Context) {
@@ -44,6 +46,26 @@ class CustomProgressDialog(private val appContext: Context) {
         pDialog?.setCancelable(false)
         pDialog?.show()
 
+    }
+
+    fun showThemedDialog(msg: String,listener : DialogInterface.OnClickListener) {
+        val dialog = AlertDialog.Builder(appContext, R.style.CustomAlertDialogTheme)
+            .setMessage(msg)
+            .setCancelable(false)
+            .setPositiveButton("OK",listener)
+            .create()
+
+        // Overriding the theme of dialog with custom font and size.
+        dialog.setOnShowListener {
+            val typF = ResourcesCompat.getFont(appContext, R.font.manrope_bold)
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.apply {
+                typeface = typF
+                setTextColor(ContextCompat.getColor(context, R.color.Olive))
+                textSize = 16f
+            }
+        }
+
+        dialog.show()
     }
 
     fun closePialog(){

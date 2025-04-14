@@ -327,7 +327,7 @@ class UserEntryDialogFragment(var onDialogDismissed: OnDialogDismiss) : DialogFr
     private fun checkAndSuggestPodcasts(uEntry: UserEntryDialogFragment, predictedEmotion: String){
         when(predictedEmotion){
             "sadness","anger","fear" -> {
-                progressDialog.showAlert("Feeling like unwinding or getting inspired?, Tune into a podcast that fits your mood.",
+                progressDialog.showThemedDialog("Feeling like unwinding or getting inspired?, Tune into a podcast that fits your mood.",
                     object : DialogInterface.OnClickListener{
                         override fun onClick(dialog: DialogInterface?, which: Int) {
                             dialog?.dismiss()
