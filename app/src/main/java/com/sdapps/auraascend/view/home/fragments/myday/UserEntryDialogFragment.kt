@@ -2,6 +2,7 @@ package com.sdapps.auraascend.view.home.fragments.myday
 
 
 import android.animation.Animator
+import android.content.DialogInterface
 import android.content.res.ColorStateList
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
@@ -32,6 +33,8 @@ import com.sdapps.auraascend.core.room.AppDatabase
 import com.sdapps.auraascend.core.room.EmotionDao
 import com.sdapps.auraascend.core.room.EmotionEntity
 import com.sdapps.auraascend.databinding.DialogMoodEntryBinding
+import com.sdapps.auraascend.view.home.fragments.PodcastHelper.openPodcastsList
+import com.sdapps.auraascend.view.home.fragments.funactivity.FunActivityFragment
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
@@ -189,6 +192,7 @@ class UserEntryDialogFragment(var onDialogDismissed: OnDialogDismiss) : DialogFr
             val reasons = viewModel.getReasons()
             val fdb = FirebaseFirestore.getInstance()
             val date = LocalDate.now().toString()
+            spRef.setPredictedMoodToSharedPref(predictedEmotion)
 
             val serializedDataSet = viewModel.getReasonCategories()?.map {
                 mapOf("reason" to it.second) // we are not using index value to store it in firebase.
@@ -218,15 +222,15 @@ class UserEntryDialogFragment(var onDialogDismissed: OnDialogDismiss) : DialogFr
                 .collection("mood_history")
                 .add(frbData)
                 .addOnSuccessListener {
-                    showCompletion(true)
+                    showCompletion(true,predictedEmotion)
                 }.addOnFailureListener { err ->
                     showToast(err.message.toString())
-                    showCompletion(false)
+                    showCompletion(false,"")
                 }
         } catch (ex: Exception) {
             ex.printStackTrace()
             showToast(ex.message.toString())
-            showCompletion(false)
+            showCompletion(false,"")
         }
 
     }
@@ -250,7 +254,7 @@ class UserEntryDialogFragment(var onDialogDismissed: OnDialogDismiss) : DialogFr
         }
     }
 
-    private fun showCompletion(isCompleted: Boolean) {
+    private fun showCompletion(isCompleted: Boolean,predictedEmotion: String) {
         var animation = R.raw.something_went_wrong
 
         if (isCompleted) {
@@ -269,7 +273,7 @@ class UserEntryDialogFragment(var onDialogDismissed: OnDialogDismiss) : DialogFr
                 override fun onAnimationStart(animation: Animator) {}
 
                 override fun onAnimationEnd(animation: Animator) {
-                    showButton()
+                    showButton(predictedEmotion)
                 }
 
                 override fun onAnimationCancel(animation: Animator) {}
@@ -280,7 +284,7 @@ class UserEntryDialogFragment(var onDialogDismissed: OnDialogDismiss) : DialogFr
         }
     }
 
-    private fun showButton() {
+    private fun showButton(predictedEmotion: String) {
 
         binding.statusMsg.apply {
             alpha = 0f
@@ -315,7 +319,23 @@ class UserEntryDialogFragment(var onDialogDismissed: OnDialogDismiss) : DialogFr
 
             setOnClickListener {
                 onDialogDismissed.onDialogDismissed()
-                this@UserEntryDialogFragment.dismiss()
+                checkAndSuggestPodcasts(this@UserEntryDialogFragment,predictedEmotion)
+            }
+        }
+    }
+
+    private fun checkAndSuggestPodcasts(uEntry: UserEntryDialogFragment, predictedEmotion: String){
+        when(predictedEmotion){
+            "sadness","anger","fear" -> {
+                progressDialog.showAlert("Feeling like unwinding or getting inspired?, Tune into a podcast that fits your mood.",
+                    object : DialogInterface.OnClickListener{
+                        override fun onClick(dialog: DialogInterface?, which: Int) {
+                            dialog?.dismiss()
+                            openPodcastsList(requireActivity(),progressDialog,viewModel,viewLifecycleOwner,spRef,uEntry)
+                        }
+                })
+            } else -> {
+                uEntry.dismiss()
             }
         }
     }

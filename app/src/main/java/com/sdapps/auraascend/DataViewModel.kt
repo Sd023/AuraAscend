@@ -11,6 +11,8 @@ import com.sdapps.auraascend.core.room.EmotionDao
 import com.sdapps.auraascend.core.room.EmotionEntity
 import com.sdapps.auraascend.view.home.RetrofitBuilder
 import com.sdapps.auraascend.view.home.fragments.myday.ClassificationModel
+import com.sdapps.auraascend.view.home.spotify.FetchSong.fetchPodcasts
+import com.sdapps.auraascend.view.home.spotify.PodcastShow
 import com.sdapps.auraascend.view.login.data.UserBO
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -159,6 +161,24 @@ class DataViewModel : ViewModel() {
                 }
 
             _dailyMoodData.postValue(grouped)
+        }
+    }
+
+    val podcastList = MutableLiveData<List<PodcastShow>?>()
+    val errorMessage = MutableLiveData<String>()
+
+    fun getPodcastList() : List<PodcastShow>? {
+        return podcastList.value
+    }
+    fun getPodcasts(query: String, token: String){
+        viewModelScope.launch(Dispatchers.IO) {
+            fetchPodcasts(token, query) { podcasts ->
+                if(podcasts != null){
+                    podcastList.postValue(podcasts)
+                } else {
+                    errorMessage.postValue("No podcasts found")
+                }
+            }
         }
     }
 

@@ -21,6 +21,8 @@ class SharedPrefHelper(context: Context) {
         const val STORES_COUNT = "STORIES_COUNT"
 
         const val LIKED_QUOTES = "liked_qoutes"
+
+        const val PREDICTED_MOOD = "ml_mood"
     }
     init {
         spRef =  context.getSharedPreferences(SP_NAME, MODE_PRIVATE)
@@ -31,6 +33,13 @@ class SharedPrefHelper(context: Context) {
     fun getQuotesRead(): Int { return spRef.getInt(LIKED_QUOTES, 0)}
     fun getAllActivites(): Int { return spRef.getInt(ALL_ACTIVITY, 0) }
 
+    fun setPredictedMoodToSharedPref(mood: String){
+        spRef.edit().putString(PREDICTED_MOOD,mood).apply()
+    }
+
+    fun getPredictedMoodFromSharedPref(): String? {
+        return spRef.getString(PREDICTED_MOOD,"")
+    }
 
     fun setQuotesLiked(count: Int){
         spRef.edit().putInt(LIKED_QUOTES,count).apply()
