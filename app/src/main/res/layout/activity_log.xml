@@ -5,7 +5,20 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".view.home.fragments.myday.LogActivity">
+
+
+    <TextView
+        android:id="@+id/noData"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/no_data_available"
+        android:textSize="18sp"
+        android:fontFamily="@font/manrope_regular"
+        android:textColor="@color/colorForIconTint"
+        android:visibility="gone"
+        android:gravity="center"/>
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -13,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="30dp"
+        android:visibility="visible"
         android:padding="10dp"/>
 
 </LinearLayout>

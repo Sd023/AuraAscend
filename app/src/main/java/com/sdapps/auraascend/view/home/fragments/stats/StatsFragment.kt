@@ -147,31 +147,36 @@ class StatsFragment : Fragment() {
     }*/
 
     private fun setupBarChart(entries: List<BarEntry>) {
-        val dataSet = BarDataSet(entries, "Today's Mood Count")
-        dataSet.setColors(ColorTemplate.MATERIAL_COLORS.toList())
-        dataSet.valueTextSize = 14f
+        if(entries.isEmpty()){
+            binding.dailyBarChart.setNoDataText("No data to display")
+            binding.dailyBarChart.setNoDataTextColor(Color.RED)
+        } else {
+            val dataSet = BarDataSet(entries, "Today's Mood Count")
+            dataSet.setColors(ColorTemplate.MATERIAL_COLORS.toList())
+            dataSet.valueTextSize = 14f
 
-        val barData = BarData(dataSet)
-        val chart  = binding.dailyBarChart
+            val barData = BarData(dataSet)
+            val chart  = binding.dailyBarChart
 
-        chart.data = barData
-        chart.xAxis.apply {
-            valueFormatter = IndexAxisValueFormatter(moodLabels)
-            position = XAxis.XAxisPosition.BOTTOM
-            setDrawGridLines(false)
-            granularity = 1f
-            textColor = Color.rgb(158, 158, 158)
-            labelCount = moodLabels.size
+            chart.data = barData
+            chart.xAxis.apply {
+                valueFormatter = IndexAxisValueFormatter(moodLabels)
+                position = XAxis.XAxisPosition.BOTTOM
+                setDrawGridLines(false)
+                granularity = 1f
+                textColor = Color.rgb(158, 158, 158)
+                labelCount = moodLabels.size
+            }
+
+            chart.axisLeft.axisMinimum = 0f
+            chart.axisLeft.textColor = Color.rgb(158, 158, 158)
+
+            chart.axisRight.isEnabled = false
+            chart.axisRight.textColor = Color.rgb(158, 158, 158)
+            chart.description.isEnabled = false
+            chart.legend.textColor = Color.rgb(158, 158, 158)
+            chart.invalidate()
         }
-
-        chart.axisLeft.axisMinimum = 0f
-        chart.axisLeft.textColor = Color.rgb(158, 158, 158)
-
-        chart.axisRight.isEnabled = false
-        chart.axisRight.textColor = Color.rgb(158, 158, 158)
-        chart.description.isEnabled = false
-        chart.legend.textColor = Color.rgb(158, 158, 158)
-        chart.invalidate()
     }
 
     private fun isToday(timestampMillis: Long): Boolean {

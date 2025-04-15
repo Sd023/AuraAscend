@@ -58,10 +58,10 @@ class RegisterUserActivity : AppCompatActivity(), LoginManager.RegisterView {
             validateAndCreateUser()
         }
 
-        binding.gSignIn.setOnClickListener {
+        /*binding.gSignIn.setOnClickListener {
             val signInIntent = googleSignHelper.client.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)
-        }
+        }*/
     }
 
     private fun validateAndCreateUser() {
@@ -141,7 +141,7 @@ class RegisterUserActivity : AppCompatActivity(), LoginManager.RegisterView {
         }
     }
 
-    override fun onActivityResult(
+    /*override fun onActivityResult(
         requestCode: Int,
         resultCode: Int,
         data: Intent?,
@@ -157,7 +157,7 @@ class RegisterUserActivity : AppCompatActivity(), LoginManager.RegisterView {
                 Log.e("GoogleSignIn", "Sign-in failed", e)
             }
         }
-    }
+    }*/
 
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)

@@ -11,24 +11,50 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/logo"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_new_app_logo"
+            android:layout_marginTop="40dp"/>
+
+        <TextView
+            android:id="@+id/tagLine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/logo"
-            android:layout_marginTop="40dp"
-            android:padding="40dp"/>
+            android:textAlignment="center"
+            android:text="@string/aura_ascend"
+            style="@style/ManropeRegular"
+            android:textSize="28sp"
+            android:layout_below="@id/logo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            />
 
-        <androidx.cardview.widget.CardView
+
+        <TextView
+            android:id="@+id/tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Your Go-To for Good Vibes"
+            style="@style/ManropeRegular"
+            android:textSize="20sp"
+            android:layout_below="@id/tagLine"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            />
+
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/loginView"
             android:layout_width="match_parent"
             android:layout_margin="20dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="#EEF0EC"
-            app:cardCornerRadius="8dp"
+            style="@style/CustomMaterialCardView"
             android:onClick="expand"
-            android:layout_below="@id/logo"
-            app:cardElevation="8dp">
+            android:layout_below="@id/tag">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -38,7 +64,7 @@
                     android:id="@+id/loginLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Login"
+                    android:text="@string/login"
                     style="@style/ManropeRegular"
                     android:textSize="22sp"
                     android:padding="10dp"
@@ -58,9 +84,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="90dp"
                         android:hint="@string/email"
-                        app:hintTextColor="@color/Olive"
+                        app:hintTextColor="@color/colorForIconTint"
                         android:padding="5dp"
-                        app:boxStrokeColor="@color/Olive"
+                        app:boxStrokeColor="@color/colorForIconTint"
                         app:endIconMode="clear_text"
                         android:layout_marginBottom="12dp">
 
@@ -78,8 +104,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="90dp"
                         android:hint="@string/password"
-                        app:boxStrokeColor="@color/Olive"
-                        app:hintTextColor="@color/Olive"
+                        app:boxStrokeColor="@color/colorForIconTint"
+                        app:hintTextColor="@color/colorForIconTint"
                         app:passwordToggleEnabled="true"
                         android:padding="5dp"
                         android:layout_marginBottom="12dp">
@@ -101,6 +127,7 @@
                         android:text="Login"
                         android:textColor="@color/White"
                         android:textSize="18sp"
+                        android:layout_margin="10dp"
                         style="@style/CustomButtonStyle"
                         android:backgroundTint="@color/GoogleSign"
                         android:padding="15dp"
@@ -111,19 +138,17 @@
 
             </RelativeLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/continueAsGuestLayout"
             android:layout_width="match_parent"
             android:layout_margin="20dp"
             android:layout_height="wrap_content"
             android:clickable="true"
+            style="@style/CustomMaterialCardView"
             android:focusable="true"
-            app:cardCornerRadius="8dp"
-            android:backgroundTint="#EEF0EC"
-            android:layout_below="@+id/loginView"
-            app:cardElevation="8dp">
+            android:layout_below="@+id/loginView">
 
             <TextView
                 android:id="@+id/guestBtn"
@@ -135,10 +160,10 @@
                 android:padding="10dp"
                 android:layout_marginStart="10dp"/>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
 
-        <LinearLayout
+      <!--  <LinearLayout
             android:id="@+id/viewLa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -165,10 +190,10 @@
                 android:layout_gravity="center"
                 android:layout_weight="3"
                 android:background="@color/black"/>
-        </LinearLayout>
+        </LinearLayout>-->
 
 
-        <com.google.android.material.button.MaterialButton
+      <!--  <com.google.android.material.button.MaterialButton
             style="@style/CustomButtonStyle"
             android:id="@+id/gSignIn"
             android:layout_width="match_parent"
@@ -184,12 +209,12 @@
             android:gravity="center"
             app:iconGravity="textStart"
             app:iconTint="@null" />
-
+-->
         <TextView
             android:id="@+id/register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/gSignIn"
+            android:layout_below="@+id/continueAsGuestLayout"
             android:text="@string/not_registered_sign_up_now"
             android:layout_centerHorizontal="true"
             style="@style/ManropeRegular"

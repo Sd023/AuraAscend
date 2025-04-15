@@ -2,6 +2,7 @@ package com.sdapps.auraascend.view.home.fragments.myday
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.LinearLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -32,6 +33,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.LocalDate
 
 class LogActivity : AppCompatActivity() {
 
@@ -80,22 +82,33 @@ class LogActivity : AppCompatActivity() {
     }
 
     private fun setupView(moodList: List<EmotionEntity>){
-        binding.logRV.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        val myAdapter = LogAdapter(moodList,this)
-        binding.logRV.adapter = myAdapter
+        if (moodList.isEmpty()){
+            binding.logRV.visibility = View.GONE
+            binding.noData.visibility = View.VISIBLE
+        } else {
+            binding.logRV.visibility = View.VISIBLE
+            binding.noData.visibility = View.GONE
+            binding.logRV.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            val myAdapter = LogAdapter(moodList,this)
+            binding.logRV.adapter = myAdapter
+        }
+
     }
 
     fun getDataFromFireBase(moduleCode: String){
         try {
+            val todayDate = LocalDate.now().toString()
             val moodLabels = categoryToLabels[moduleCode] as List<String>
-            viewModel.getEmotionsFromDB(dao,moodLabels)
+            //viewModel.getEmotionsFromDB(dao,moodLabels)
+            // WE ARE NOT USING ROOM DATABASE HERE
 
-            lifecycleScope.launch {
+           /* lifecycleScope.launch {
                 viewModel.moods.collect { moodList ->
                     //
                 }
-            }
+            }*/
 
+            // Firebase is not in use.
             Log.d("Log", " Module code is : $moduleCode")
             Firebase.firestore
                 .collection("users")

@@ -54,4 +54,7 @@
     <string name="profile">profile</string>
     <string name="log_out">Log Out</string>
     <string name="curated_podcasts">Curated Podcasts!</string>
+    <string name="login">Login</string>
+    <string name="aura_ascend">Aura Ascend</string>
+    <string name="no_data_available">No data available</string>
 </resources>

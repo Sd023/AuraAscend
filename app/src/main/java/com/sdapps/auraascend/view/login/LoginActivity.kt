@@ -88,10 +88,10 @@ class LoginActivity : AppCompatActivity(), LoginManager.View {
         }
 
 
-        binding.gSignIn.setOnClickListener {
+        /*binding.gSignIn.setOnClickListener {
             val signInIntent = googleSignHelper.client.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)
-        }
+        }*/
 
         binding.register.setOnClickListener {
             val intent = Intent(this@LoginActivity, RegisterUserActivity::class.java)
@@ -151,14 +151,17 @@ class LoginActivity : AppCompatActivity(), LoginManager.View {
                 }
 
             }
+            GUEST -> {
+                callHomeScreen(GUEST)
+            }
 
-            SIGNINWITHGOOGLE -> {
+            /*SIGNINWITHGOOGLE -> {
                 if(spRef.getUserOnboardStatus()){
                    callHomeScreen(isFrom)
                 } else{
                     startOnBoard(isFrom)
                 }
-            }
+            }*/
         }
 
     }
@@ -167,8 +170,11 @@ class LoginActivity : AppCompatActivity(), LoginManager.View {
         val intent = Intent(this@LoginActivity, HomeScreen::class.java)
         intent.putExtra("isBy", isFrom)
         startActivity(intent)
-        finish()
+        if(isFrom != "guest") {
+            finish()
+        }
     }
+
     private fun startOnBoard(isFrom: String){
         val intent = Intent(this@LoginActivity, OnboardingActivity::class.java)
         intent.putExtra("isBy", isFrom)
@@ -180,7 +186,7 @@ class LoginActivity : AppCompatActivity(), LoginManager.View {
         progressDialog.showAlert(msg)
     }
 
-    override fun onActivityResult(
+   /* override fun onActivityResult(
         requestCode: Int,
         resultCode: Int,
         data: Intent?,
@@ -196,7 +202,7 @@ class LoginActivity : AppCompatActivity(), LoginManager.View {
                 Log.e("GoogleSignIn", "Sign-in failed", e)
             }
         }
-    }
+    }*/
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         mAuth.signInWithCredential(credential)

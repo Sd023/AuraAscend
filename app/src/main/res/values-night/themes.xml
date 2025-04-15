@@ -55,15 +55,25 @@
         <item name="android:textColor">#BFEB1719</item>
     </style>
 
+    <style name="CustomButtonStyle" parent="Widget.Material3.Button">
+        <item name="shapeAppearance">@style/Shape.MyRoundedButton</item>
+        <item name="backgroundTint">@color/googlefont</item>
+        <item name="fontFamily">@style/Manrope</item>
+        <item name="android:textSize">18sp</item>
+    </style>
     <style name="CustomAlertDialogTheme" parent="ThemeOverlay.Material3.MaterialAlertDialog">
-        <item name="android:background">@color/WhiteSmoke</item>
+        <item name="android:background">@color/colorForIconTint</item>
         <item name="android:windowMinWidthMajor">90%</item>
-        <item name="android:textColor">@color/Olive</item>
+        <item name="android:textColor">@color/black</item>
         <item name="fontFamily">@font/manrope_regular</item>
     </style>
 
     <style name="text_bg">
         <item name="android:textSize">200sp</item>
         <item name="android:textColor">@color/colorForIconTint</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.CornerSize10Percent" parent="">
+        <item name="cornerSize">30%</item>
     </style>
 </resources>

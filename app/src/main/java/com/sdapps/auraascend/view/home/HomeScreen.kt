@@ -23,15 +23,30 @@ class HomeScreen : AppCompatActivity() {
         EmojiCompat.init(BundledEmojiCompatConfig(this))
         binding = ActivityHomeScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        init()
+        val guestMode = intent.extras?.getString("isBy") ?: ""
+        init(guestMode)
+
     }
 
-    private fun init(){
+    private fun init(guestMode: String){
         val navView: BottomNavigationView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment_activity_main2)
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_my_day, R.id.nav_activity, R.id.nav_stats))
-        //setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        if(guestMode == "guest") {
+            navView.menu.findItem(R.id.nav_stats)?.isVisible = false
+            navView.menu.findItem(R.id.nav_my_day)?.isVisible = false
+            val navController = findNavController(R.id.nav_host_fragment_activity_main2)
+            val navInflater = navController.navInflater
+            val navGraph = navInflater.inflate(R.navigation.mobile_navigation)
+            navGraph.setStartDestination(R.id.nav_activity)
+
+            navController.graph = navGraph
+            navView.setupWithNavController(navController)
+
+        } else{
+            val navController = findNavController(R.id.nav_host_fragment_activity_main2)
+            val appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_my_day, R.id.nav_activity, R.id.nav_stats))
+            //setupActionBarWithNavController(navController, appBarConfiguration)
+            navView.setupWithNavController(navController)
+        }
     }
 
 
