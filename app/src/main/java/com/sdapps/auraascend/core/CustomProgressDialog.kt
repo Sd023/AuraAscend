@@ -70,7 +70,7 @@ class CustomProgressDialog(private val appContext: Context) {
 
     fun closePialog(){
         try {
-            if(pDialog!!.isShowing){
+            if(pDialog != null && pDialog!!.isShowing){
                 pDialog!!.dismiss()
             }
         }catch (ex: Exception){

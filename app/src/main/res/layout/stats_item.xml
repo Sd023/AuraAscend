@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="6dp"
-    app:cardElevation="4dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    style="@style/CustomMaterialCardView"
     android:layout_margin="5dp">
 
     <RelativeLayout
@@ -16,7 +15,7 @@
 
         <ImageView
             android:id="@+id/imageIcon"
-            app:tint="@color/Olive"
+            app:tint="@color/colorForIconTint"
             android:layout_width="40dp"
             android:layout_height="40dp" />
 
@@ -26,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:fontFamily="@font/manrope_regular"
-            android:textColor="@android:color/black"
+            android:textColor="@color/colorForIconTint"
             android:textSize="16sp"
             android:layout_toEndOf="@id/imageIcon"
             android:layout_centerVertical="true"/>
@@ -38,10 +37,10 @@
             android:layout_marginStart="12dp"
             android:fontFamily="@font/manrope_regular"
             android:text="@string/zerio"
-            android:textColor="@android:color/black"
+            android:textColor="@color/colorForIconTint"
             android:textSize="16sp"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="20dp"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

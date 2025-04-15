@@ -12,8 +12,11 @@ import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.sdapps.auraascend.DataViewModel
 import com.sdapps.auraascend.R
+import com.sdapps.auraascend.core.CustomProgressDialog
 import com.sdapps.auraascend.core.SharedPrefHelper
 import com.sdapps.auraascend.databinding.ActivitySwipeQuoteBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlin.getValue
 
 class SwipeQuoteActivity : AppCompatActivity() {
@@ -21,6 +24,7 @@ class SwipeQuoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySwipeQuoteBinding
     private lateinit var spRef : SharedPrefHelper
     private val dm: DataViewModel by viewModels()
+    private lateinit var progressDialog : CustomProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +37,8 @@ class SwipeQuoteActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        progressDialog = CustomProgressDialog(this)
+        progressDialog.showLoadingProgress("Fetching quotes...")
         dm.fetchQuote()
         spRef = SharedPrefHelper(this)
         init()
@@ -82,6 +88,7 @@ class SwipeQuoteActivity : AppCompatActivity() {
 
         dm.allQuotes.observe(this) { quotes ->
             if(quotes.isNotEmpty()){
+                progressDialog.closePialog()
                 val adapter = SwipeQuoteAdapter(quotes,spRef)
                 binding.viewPager.adapter = adapter
             }

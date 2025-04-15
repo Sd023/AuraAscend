@@ -28,7 +28,7 @@
             android:text="@string/achievements"
             android:textSize="25sp"
             android:fontFamily="@font/manrope_regular"
-            android:textColor="@color/Olive"/>
+            android:textColor="@color/colorForIconTint"/>
 
        <androidx.recyclerview.widget.RecyclerView
            android:id="@+id/recyclerView"

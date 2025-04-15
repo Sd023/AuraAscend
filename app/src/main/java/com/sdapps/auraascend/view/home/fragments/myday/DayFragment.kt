@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import com.sdapps.auraascend.DataViewModel
 import com.sdapps.auraascend.core.DateUtils
 import com.sdapps.auraascend.databinding.FragmentDayBinding
+import com.sdapps.auraascend.view.home.fragments.funactivity.swipeaquote.SwipeQuoteActivity
 
 class DayFragment : Fragment() , OnDialogDismiss{
 
@@ -34,6 +35,11 @@ class DayFragment : Fragment() , OnDialogDismiss{
 
     private fun init(){
         binding.dateView.text = DateUtils.getToday()
+
+
+        binding.quotesCardView.setOnClickListener {
+            startActivity(Intent(requireActivity(), SwipeQuoteActivity::class.java))
+        }
 
         vm.quote.observe(viewLifecycleOwner) { dayQuotes ->
             binding.quoteText.text = buildString { append(dayQuotes.quote).append(" - ").append(dayQuotes.author) }

@@ -101,11 +101,10 @@ class UserEntryDialogFragment(var onDialogDismissed: OnDialogDismiss) : DialogFr
                 this.text = text
                 isCheckable = true
                 isClickable = true
-                setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
+                setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
                 setTextColor(ContextCompat.getColor(context, R.color.black))
                 chipBackgroundColor =
                     ColorStateList.valueOf(ContextCompat.getColor(context, R.color.GhostWhite))
-                chipStrokeWidth = 1f
                 setChipStrokeColorResource(R.color.LightGrey)
                 this.typeface = manRopeTypeface
 

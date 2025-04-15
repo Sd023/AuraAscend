@@ -1,12 +1,10 @@
 package com.sdapps.auraascend.view.home.fragments.stats
 
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,7 +14,6 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.sdapps.auraascend.DataViewModel
 import com.sdapps.auraascend.R
@@ -25,8 +22,6 @@ import com.sdapps.auraascend.core.room.AppDatabase
 import com.sdapps.auraascend.core.room.EmotionDao
 import com.sdapps.auraascend.databinding.FragmentStatsBinding
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 
@@ -165,12 +160,17 @@ class StatsFragment : Fragment() {
             position = XAxis.XAxisPosition.BOTTOM
             setDrawGridLines(false)
             granularity = 1f
+            textColor = Color.rgb(158, 158, 158)
             labelCount = moodLabels.size
         }
 
         chart.axisLeft.axisMinimum = 0f
+        chart.axisLeft.textColor = Color.rgb(158, 158, 158)
+
         chart.axisRight.isEnabled = false
+        chart.axisRight.textColor = Color.rgb(158, 158, 158)
         chart.description.isEnabled = false
+        chart.legend.textColor = Color.rgb(158, 158, 158)
         chart.invalidate()
     }
 

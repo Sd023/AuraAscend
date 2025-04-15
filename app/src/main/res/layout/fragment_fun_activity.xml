@@ -11,6 +11,7 @@
         android:id="@+id/activityRV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:listitem="@layout/fun_activity_items"
         android:visibility="visible"/>
 
 </FrameLayout>

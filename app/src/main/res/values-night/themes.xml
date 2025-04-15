@@ -1,5 +1,41 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
+    <style name="Theme.AuraAscend" parent="Base.Theme.AuraAscend" >
+        <item name="colorPrimary">@color/Beige</item>
+        <item name="colorOnPrimary">@color/Beige</item>
+        <item name="colorPrimaryContainer">@color/Beige</item>
+        <item name="colorOnPrimaryContainer">@color/Beige</item>
+
+    </style>
+
+    <style name="CustomMaterialCardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/cardColor</item>
+        <item name="cardElevation">8dp</item>
+        <item name="cardCornerRadius">5dp</item>
+        <item name="strokeWidth">2dp</item>
+    </style>
+
+
+    <style name="CustomGoodTimesCard" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/cardGoodTimesColor</item>
+        <item name="cardElevation">8dp</item>
+        <item name="cardCornerRadius">12dp</item>
+    </style>
+
+
+    <style name="CustomNeutralCard" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/cardNeutralTimesColor</item>
+        <item name="cardElevation">8dp</item>
+        <item name="cardCornerRadius">12dp</item>
+    </style>
+
+
+    <style name="CustomRoughTimesCard" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/cardRoughTimesColor</item>
+        <item name="cardElevation">8dp</item>
+        <item name="cardCornerRadius">12dp</item>
+    </style>
+
     <style name="Base.Theme.AuraAscend" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/Beige</item>
         <item name="colorOnPrimary">@color/Beige</item>
@@ -7,12 +43,6 @@
         <item name="colorOnPrimaryContainer">@color/Beige</item>
     </style>
 
-    <style name="Theme.AuraAscend" parent="Base.Theme.AuraAscend" >
-        <item name="colorPrimary">@color/Beige</item>
-        <item name="colorOnPrimary">@color/Beige</item>
-        <item name="colorPrimaryContainer">@color/Beige</item>
-        <item name="colorOnPrimaryContainer">@color/Beige</item>
-    </style>
 
     <style name="Theme.Splash" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/black</item>
@@ -34,6 +64,6 @@
 
     <style name="text_bg">
         <item name="android:textSize">200sp</item>
-        <item name="android:textColor">#38000000</item>
+        <item name="android:textColor">@color/colorForIconTint</item>
     </style>
 </resources>

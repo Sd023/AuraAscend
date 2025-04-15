@@ -15,6 +15,9 @@
         android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:itemIconTint="@color/colorForIconTint"
+        app:itemTextColor="@color/colorForIconTint"
+        app:itemActiveIndicatorStyle="@color/colorForIconTint"
         app:layout_constraintRight_toRightOf="parent"
         android:fitsSystemWindows="true"
         app:menu="@menu/bottom_nav_menu" />

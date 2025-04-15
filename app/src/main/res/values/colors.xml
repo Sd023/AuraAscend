@@ -147,6 +147,16 @@
     <color name="Navy">#000080</color>
     <color name="Black">#000000</color>
     <color name="GoogleSign">#131314</color>
+
+    <color name="textColorForBNV">#808000</color>
     <color name="googlestroke">#8E918F</color>
     <color name="googlefont">#E3E3E3</color>
+
+    <color name="colorForIconTint">@color/black</color>
+    <color name="cardStrokeColor">#131314</color>
+    <color name="cardColor">@color/WhiteSmoke</color>
+
+    <color name="cardGoodTimesColor">#4A8F76</color>
+    <color name="cardNeutralTimesColor">#D0A87A</color>
+    <color name="cardRoughTimesColor">#D10010</color>
 </resources>

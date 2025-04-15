@@ -31,7 +31,8 @@
             android:layout_marginTop="25dp"
             android:layout_alignParentEnd="true"
             android:clickable="true"
-            android:layout_marginEnd="20dp"/>
+            android:layout_marginEnd="20dp"
+            app:tint="@color/colorForIconTint" />
 
 
 
@@ -48,20 +49,19 @@
             android:gravity="center_vertical"
             android:text="@string/daily_motivation"
             android:textSize="18sp"
+            android:drawableTint="@color/colorForIconTint"
             app:drawableStartCompat="@drawable/icon_left" />
 
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardView"
+            android:id="@+id/quotesCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/headerTextView"
             android:layout_marginHorizontal="16dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="8dp"
-            app:strokeColor="@color/black"
-            app:strokeWidth="1dp"
-            app:cardBackgroundColor="@color/WhiteSmoke"
+            style="@style/CustomMaterialCardView"
             android:layout_marginTop="12dp"
             card_view:cardElevation="5dp">
 
@@ -78,7 +78,7 @@
                     android:layout_marginEnd="8dp"
                     android:contentDescription="@string/quote_icon"
                     android:src="@drawable/icon_60"
-                    app:tint="@android:color/black" />
+                    app:tint="@color/colorForIconTint" />
 
                 <TextView
                     android:id="@+id/quoteText"
@@ -88,7 +88,7 @@
                     android:fontFamily="serif"
                     android:lineSpacingExtra="4dp"
                     android:text=""
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/colorForIconTint"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -99,7 +99,7 @@
             android:id="@+id/dateView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/cardView"
+            android:layout_below="@id/quotesCardView"
             android:layout_marginStart="15dp"
             android:layout_marginTop="40dp"
             style="@style/ManropeRegular"
@@ -108,9 +108,10 @@
             android:gravity="center_vertical"
             android:text=""
             android:textSize="18sp"
-            app:drawableStartCompat="@drawable/ic_calendaor" />
+            app:drawableStartCompat="@drawable/ic_calendaor"
+            app:drawableTint="@color/colorForIconTint" />
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
 
             android:id="@+id/addStory"
             android:layout_width="match_parent"
@@ -119,7 +120,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="25dp"
             android:layout_marginEnd="16dp"
-            android:backgroundTint="#F5F5F5"
+            style="@style/CustomMaterialCardView"
             android:clickable="true"
             android:focusable="true"
             app:cardCornerRadius="12dp"
@@ -127,7 +128,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:padding="16dp">
@@ -137,7 +138,7 @@
                     android:layout_height="32dp"
                     android:contentDescription="@string/add_icon"
                     android:src="@drawable/ic_add"
-                    app:tint="#A0A0A0" />
+                    app:tint="@color/colorForIconTint" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -147,12 +148,12 @@
                     style="@style/ManropeRegular"
                     android:textStyle="bold"
                     android:text="@string/add_story_of_the_day"
-                    android:textColor="#A0A0A0"
+                    android:textColor="@color/colorForIconTint"
                     android:textSize="16sp" />
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
 
         <RelativeLayout
@@ -172,20 +173,19 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="180dp"
                 android:orientation="horizontal"
                 android:layout_marginTop="20dp"
                 android:layout_below="@id/reflectTitle">
 
-                <androidx.cardview.widget.CardView
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/goodDayCard"
                     android:layout_width="0dp"
                     android:layout_height="152dp"
                     android:layout_marginEnd="12dp"
+                    style="@style/CustomGoodTimesCard"
                     android:layout_weight="2"
-                    android:clickable="true"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="4dp">
+                    android:clickable="true">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -197,6 +197,7 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:src="@drawable/ic_smile"
+                            app:tint="@color/white"
                             android:contentDescription="@string/smile_icon" />
 
                         <TextView
@@ -209,20 +210,19 @@
                             style="@style/ManropeRegular"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:textColor="@android:color/black" />
+                            android:textColor="@color/white" />
                     </LinearLayout>
 
-                </androidx.cardview.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
 
-                <androidx.cardview.widget.CardView
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/neutralDayCard"
                     android:layout_width="0dp"
                     android:layout_height="152dp"
-                    android:layout_weight="2"
-                    android:clickable="true"
                     android:layout_marginEnd="12dp"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="4dp">
+                    style="@style/CustomNeutralCard"
+                    android:layout_weight="2"
+                    android:clickable="true">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -234,6 +234,7 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:src="@drawable/ic_normal"
+                            app:tint="@color/white"
                             android:contentDescription="@string/cloud_icon" />
 
                         <TextView
@@ -246,19 +247,19 @@
                             android:maxLines="2"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:textColor="@android:color/black" />
+                            android:textColor="@color/white" />
                     </LinearLayout>
 
-                </androidx.cardview.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
 
-                <androidx.cardview.widget.CardView
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/roughDayCard"
                     android:layout_width="0dp"
                     android:layout_height="152dp"
-                    app:cardCornerRadius="12dp"
-                    android:clickable="true"
+                    android:layout_marginEnd="12dp"
+                    style="@style/CustomRoughTimesCard"
                     android:layout_weight="2"
-                    app:cardElevation="4dp">
+                    android:clickable="true">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -270,7 +271,8 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:src="@drawable/ic_cloud"
-                            android:contentDescription="@string/rough_cloud" />
+                            android:contentDescription="@string/rough_cloud"
+                            app:tint="@color/white" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -282,10 +284,10 @@
                             style="@style/ManropeRegular"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:textColor="@android:color/black" />
+                            android:textColor="@color/white" />
                     </LinearLayout>
 
-                </androidx.cardview.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>
 
