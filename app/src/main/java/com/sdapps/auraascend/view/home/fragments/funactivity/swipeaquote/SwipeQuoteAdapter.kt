@@ -14,6 +14,7 @@ class SwipeQuoteAdapter(private val quotesList: ArrayList<DayQuotes>,val spRef: 
 
     class QuoteViewHolder(binding: SwipeaquoteItemBinding): RecyclerView.ViewHolder(binding.root) {
         var quoteText : TextView = binding.quoteText
+        var quoteAuthor: TextView = binding.quoteAuthor
         var likeIcon : ImageView = binding.like
         var bookmarkIcon : ImageView = binding.bookmark
 
@@ -30,9 +31,11 @@ class SwipeQuoteAdapter(private val quotesList: ArrayList<DayQuotes>,val spRef: 
     override fun onBindViewHolder(holder: QuoteViewHolder, position: Int) {
         val quotes = quotesList[position]
         holder.quoteText.text = quotes.quote
+        holder.quoteAuthor.text = "- ${quotes.author}"
         var isLiked = false
         var isBookMarked = false
         val pastach = spRef.getQuotesRead()
+
         holder.likeIcon.setOnClickListener {
             isLiked = !isLiked
             if(isLiked){

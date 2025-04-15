@@ -10,8 +10,9 @@
 
     <queries>
         <intent>
-            <action android:name="android.intent.action.SEND"/>
-            <data android:mimeType="image/jpeg"/>
+            <action android:name="android.intent.action.SEND" />
+
+            <data android:mimeType="image/jpeg" />
         </intent>
     </queries>
 
@@ -26,6 +27,9 @@
         android:theme="@style/Theme.AuraAscend"
         tools:replace="android:theme"
         tools:targetApi="31">
+        <activity
+            android:name=".view.home.fragments.funactivity.swipeaquote.SwipeQuoteActivity"
+            android:exported="false" />
         <activity
             android:name=".view.home.fragments.funactivity.spotify.SpotifyActivity"
             android:exported="false" />

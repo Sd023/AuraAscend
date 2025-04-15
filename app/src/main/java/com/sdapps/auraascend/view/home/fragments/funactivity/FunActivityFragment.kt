@@ -27,7 +27,7 @@ import com.sdapps.auraascend.view.home.fragments.funactivity.mindfulness.Mindful
 import com.sdapps.auraascend.view.home.fragments.funactivity.paddleplay.PaddlePlay
 import com.sdapps.auraascend.view.home.fragments.funactivity.spotify.SpotifyActivity
 import com.sdapps.auraascend.view.home.fragments.funactivity.storytime.StoryTimeActivity
-import com.sdapps.auraascend.view.home.fragments.funactivity.swipeaquote.SwipeQuote
+import com.sdapps.auraascend.view.home.fragments.funactivity.swipeaquote.SwipeQuoteActivity
 import com.sdapps.auraascend.view.home.spotify.FetchSong.fetchPodcasts
 import com.sdapps.auraascend.view.home.spotify.PodcastShow
 import com.sdapps.auraascend.view.home.spotify.getSpotifyToken
@@ -105,12 +105,7 @@ class FunActivityFragment : Fragment() {
         addCount()
         when(moduleCode){
             SWIPEAQUOTE -> {
-                binding.activityRV.visibility = View.GONE
-                val swipeFragment = SwipeQuote()
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainer, swipeFragment)
-                    .addToBackStack(null)
-                    .commit()
+              startActivity(Intent(requireActivity(), SwipeQuoteActivity::class.java))
             }
 
             MINDFULNESS -> {
