@@ -63,7 +63,11 @@ class SpotifyActivity : AppCompatActivity() {
 
 
     fun openSpotifyAndPlay(context: Context, spotifyUri: String) {
-        val intent = Intent(Intent.ACTION_VIEW, spotifyUri.toUri())
+        val appUri = convertToSpotifyAppUri(spotifyUri)
+
+        val intent = Intent(Intent.ACTION_VIEW, appUri).apply {
+            `package` = "com.spotify.music"
+        }
 
         val packageManager = context.packageManager
         val activities = packageManager.queryIntentActivities(intent, 0)
@@ -73,11 +77,25 @@ class SpotifyActivity : AppCompatActivity() {
         } else {
             Toast.makeText(context, "Spotify is not installed", Toast.LENGTH_SHORT).show()
             val playStoreIntent = Intent(Intent.ACTION_VIEW,
-                "market://details?id=com.spotify.music".toUri())
+                Uri.parse("market://details?id=com.spotify.music"))
             context.startActivity(playStoreIntent)
         }
     }
 
+    fun convertToSpotifyAppUri(externalUrl: String): Uri {
+        return try {
+            val uri = Uri.parse(externalUrl)
+            val type = uri.pathSegments.getOrNull(0)
+            val id = uri.pathSegments.getOrNull(1)
+            if (type != null && id != null) {
+                Uri.parse("spotify:$type:$id")
+            } else {
+                uri
+            }
+        } catch (e: Exception) {
+            Uri.parse(externalUrl)
+        }
+    }
     private fun showToast(msg: String){
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
