@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -80,7 +81,11 @@ class LoginActivity : AppCompatActivity(), LoginManager.View {
             val email = binding.etEmail.text?.trim().toString()
             val password = binding.etPassword.text?.trim().toString()
 
-            presenter.login(email,password)
+            when {
+                email.isNotValid() -> { binding.inEmail.error = "Enter a valid email!" }
+                password.length < 6 -> { binding.inPassword.error = "Password Should not be less than 6" }
+                else -> { presenter.login(email,password) }
+            }
         }
 
         binding.continueAsGuestLayout.setOnClickListener {
@@ -99,6 +104,9 @@ class LoginActivity : AppCompatActivity(), LoginManager.View {
         }
     }
 
+    private fun String.isNotValid(): Boolean {
+        return this.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(this).matches()
+    }
 
     fun expand(view : View){
         val v = if (binding.expandableContentLayout.isGone) View.VISIBLE else View.GONE

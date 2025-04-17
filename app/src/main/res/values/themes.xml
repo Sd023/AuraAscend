@@ -13,6 +13,7 @@
         <item name="textAppearanceHeadlineMedium">@style/ManropeRegular</item>
         <item name="textAppearanceBodyMedium">@style/Manrope</item>
         <item name="textAppearanceLabelLarge">@style/PlayFairSC</item>
+        <item name="android:datePickerDialogTheme">@style/MyDatePickerTheme</item>
     </style>
 
     <style name="CustomMaterialCardView" parent="Widget.MaterialComponents.CardView">
@@ -106,5 +107,48 @@
 
     <style name="ShapeAppearanceOverlay.App.CornerSize10Percent" parent="">
         <item name="cornerSize">30%</item>
+    </style>
+
+    <style name="MyDatePickerTheme" parent="ThemeOverlay.Material3.MaterialCalendar">
+        <item name="materialCalendarStyle">@style/CustomCalendarStyle</item>
+        <item name="textAppearanceHeadline6">@style/CalendarTitleText</item>
+        <item name="materialCalendarTheme">@style/CustomCalendarTheme</item>
+        <item name="textAppearanceTitleMedium">@style/MonthYearText</item>
+        <item name="materialButtonStyle">@style/CalendarButtonStyle</item>
+    </style>
+
+    <style name="CustomCalendarStyle" parent="Widget.Material3.MaterialCalendar">
+        <item name="dayStyle">@style/CustomCalendarDay</item>
+        <item name="daySelectedStyle">@style/CustomCalendarDaySelected</item>
+    </style>
+
+    <style name="CustomCalendarDay" parent="Widget.Material3.MaterialCalendar.Day">
+        <item name="android:textColor">#333333</item>
+        <item name="android:fontFamily">@font/manrope_regular</item>
+    </style>
+
+    <style name="CalendarTitleText" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:fontFamily">@font/manrope_regular</item>
+        <item name="android:textColor">#2D2D2D</item>
+    </style>
+
+    <style name="CustomCalendarDaySelected" parent="Widget.Material3.MaterialCalendar.Day.Selected">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:fontFamily">@font/manrope_regular</item>
+        <item name="itemFillColor">@color/colorForIconTint</item>
+    </style>
+
+    <style name="MonthYearText" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:fontFamily">@font/manrope_regular</item>
+        <item name="android:textColor">#4B4B4B</item>
+    </style>
+    <style name="CustomCalendarTheme" parent="Widget.Material3.MaterialCalendar">
+        <item name="android:background">#FFFFFF</item>
+    </style>
+
+    <style name="CalendarButtonStyle" parent="Widget.Material3.Button.TextButton">
+        <item name="android:fontFamily">@font/manrope_regular</item>
+        <item name="android:textColor">@color/colorForIconTint</item>
+        <item name="backgroundColor">@color/colorForIconTint</item>
     </style>
 </resources>

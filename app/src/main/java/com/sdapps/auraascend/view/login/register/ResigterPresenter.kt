@@ -28,12 +28,14 @@ class RegisterPresenter: LoginManager.RegisterPresenter {
     override fun createUser(userBO: UserBO) {
         mView.showLoading()
         if(userBO.email.isNotEmpty() && userBO.email.isNotEmpty()){
-            auth.createUserWithEmailAndPassword(userBO.email,userBO.password).addOnCompleteListener { task ->
-                if(task.isSuccessful){
+            auth.createUserWithEmailAndPassword(userBO.email,userBO.password)
+                .addOnSuccessListener {
                     userBO.userId = auth.currentUser?.uid.toString()
                     addUserToFrb(userBO)
+                }.addOnFailureListener { err ->
+                    mView.hideLoading()
+                    mView.showError(err.message.toString())
                 }
-            }
         } else {
             mView.showError("Email and Password is empty!")
         }

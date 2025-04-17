@@ -15,8 +15,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/name"
-            app:startIconTint="@color/colorForIconTint"
             app:startIconDrawable="@drawable/ic_person"
+            app:startIconTint="@color/MediumAquamarine"
+            app:hintTextColor="@color/colorForIconTint"
             android:layout_marginBottom="20dp"
             app:boxBackgroundMode="outline">
 
@@ -33,7 +34,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/password"
             app:startIconDrawable="@drawable/ic_lock"
-            app:startIconTint="@color/colorForIconTint"
+            app:startIconTint="@color/MediumAquamarine"
+            app:hintTextColor="@color/colorForIconTint"
             app:endIconMode="password_toggle"
             android:layout_marginBottom="20dp">
             <com.google.android.material.textfield.TextInputEditText
@@ -49,10 +51,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/date_of_birth"
-            app:startIconTint="@color/colorForIconTint"
+            app:startIconTint="@color/MediumAquamarine"
+            app:hintTextColor="@color/colorForIconTint"
             app:startIconDrawable="@drawable/ic_calendar_30"
             android:layout_marginBottom="20dp">
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtDOB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="date"
@@ -65,15 +69,16 @@
             android:id="@+id/etPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:startIconTint="@color/colorForIconTint"
+            app:startIconTint="@color/MediumAquamarine"
+            app:hintTextColor="@color/colorForIconTint"
             android:hint="@string/phone_number"
             app:startIconDrawable="@drawable/ic_phone"
             android:layout_marginBottom="20dp">
             <com.google.android.material.textfield.TextInputEditText
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
+                android:maxLength="10"
                 android:paddingStart="48dp"
                 android:paddingEnd="48dp"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -83,7 +88,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
-            app:startIconTint="@color/colorForIconTint"
+            app:startIconTint="@color/MediumAquamarine"
+            app:hintTextColor="@color/colorForIconTint"
             app:startIconDrawable="@drawable/ic_email"
             android:layout_marginBottom="20dp">
             <com.google.android.material.textfield.TextInputEditText
