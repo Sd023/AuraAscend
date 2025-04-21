@@ -113,7 +113,6 @@ class RegisterUserActivity : AppCompatActivity(), LoginManager.RegisterView {
             else -> {
                 val userBO = UserBO().apply {
                     name = uname
-                    password = upassword
                     dateOfBirth = udob
                     phoneNumber = uphone
                     email = uemail

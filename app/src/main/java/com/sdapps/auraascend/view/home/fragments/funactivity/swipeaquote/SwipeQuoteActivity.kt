@@ -39,7 +39,6 @@ class SwipeQuoteActivity : AppCompatActivity() {
         }
         progressDialog = CustomProgressDialog(this)
         progressDialog.showLoadingProgress("Fetching quotes...")
-        dm.fetchQuote()
         spRef = SharedPrefHelper(this)
         init()
     }
