@@ -43,7 +43,7 @@ class DayFragment : Fragment() , OnDialogDismiss{
         }
 
         vm.allQuotes.observe(viewLifecycleOwner) { quotesMasterList ->
-            val rndIdx = (0..quotesMasterList.size).random()
+            val rndIdx = (0..(quotesMasterList.size - 1)).random()
             val quote = quotesMasterList[rndIdx]
             binding.quoteText.text = buildString { append(quote.quote).append(" - ").append(quote.author) }
         }
