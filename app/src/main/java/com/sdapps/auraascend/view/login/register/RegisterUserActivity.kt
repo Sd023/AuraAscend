@@ -117,7 +117,7 @@ class RegisterUserActivity : AppCompatActivity(), LoginManager.RegisterView {
                     phoneNumber = uphone
                     email = uemail
                 }
-                createUser(userBO)
+                createUser(userBO,upassword)
             }
         }
     }
@@ -127,8 +127,8 @@ class RegisterUserActivity : AppCompatActivity(), LoginManager.RegisterView {
     }
 
 
-    private fun createUser(userBO: UserBO) {
-        presenter.createUser(userBO)
+    private fun createUser(userBO: UserBO,password: String) {
+        presenter.createUser(userBO,password)
     }
 
     private fun clearErrors() {

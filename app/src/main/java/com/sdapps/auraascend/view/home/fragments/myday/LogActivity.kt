@@ -3,26 +3,18 @@ package com.sdapps.auraascend.view.home.fragments.myday
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.LinearLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.tasks.Tasks
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.firestore
 import com.sdapps.auraascend.DataViewModel
-import com.sdapps.auraascend.R
 import com.sdapps.auraascend.core.CustomProgressDialog
 import com.sdapps.auraascend.core.SharedPrefHelper
 import com.sdapps.auraascend.core.room.AppDatabase
-import com.sdapps.auraascend.core.room.EmotionDao
+import com.sdapps.auraascend.core.room.AppDAO
 import com.sdapps.auraascend.core.room.EmotionEntity
 import com.sdapps.auraascend.databinding.ActivityLogBinding
 import com.sdapps.auraascend.view.home.fragments.myday.DayFragment.Companion.HAPPY
@@ -32,7 +24,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.time.LocalDate
 
 class LogActivity : AppCompatActivity() {
@@ -47,7 +38,7 @@ class LogActivity : AppCompatActivity() {
     )
 
     private lateinit var appDatabase: AppDatabase
-    private lateinit var dao: EmotionDao
+    private lateinit var dao: AppDAO
     private lateinit var viewModel: DataViewModel
     private lateinit var progressDialog: CustomProgressDialog
 

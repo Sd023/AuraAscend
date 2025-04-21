@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.sdapps.auraascend.DayQuotes
 import com.sdapps.auraascend.R
 import com.sdapps.auraascend.core.SharedPrefHelper
+import com.sdapps.auraascend.core.room.QuotesMaster
 import com.sdapps.auraascend.databinding.SwipeaquoteItemBinding
 
-class SwipeQuoteAdapter(private val quotesList: ArrayList<DayQuotes>,val spRef: SharedPrefHelper):  RecyclerView.Adapter<SwipeQuoteAdapter.QuoteViewHolder>() {
+class SwipeQuoteAdapter(private val quotesList: ArrayList<QuotesMaster>, val spRef: SharedPrefHelper):  RecyclerView.Adapter<SwipeQuoteAdapter.QuoteViewHolder>() {
 
     class QuoteViewHolder(binding: SwipeaquoteItemBinding): RecyclerView.ViewHolder(binding.root) {
         var quoteText : TextView = binding.quoteText

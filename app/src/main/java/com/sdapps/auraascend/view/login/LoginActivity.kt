@@ -1,7 +1,6 @@
 package com.sdapps.auraascend.view.login
 
 import android.Manifest
-import android.app.ComponentCaller
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -25,12 +24,11 @@ import com.sdapps.auraascend.core.CustomProgressDialog
 import com.sdapps.auraascend.databinding.ActivityLoginBinding
 import com.sdapps.auraascend.view.home.HomeScreen
 import androidx.core.view.isGone
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.common.api.ApiException
+import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.GoogleAuthProvider
+import com.sdapps.auraascend.DataViewModel
 import com.sdapps.auraascend.core.SharedPrefHelper
 import com.sdapps.auraascend.view.login.data.Constants.Companion.GUEST
-import com.sdapps.auraascend.view.login.data.Constants.Companion.RC_SIGN_IN
 import com.sdapps.auraascend.view.login.data.Constants.Companion.SIGNINWITHGOOGLE
 import com.sdapps.auraascend.view.login.data.Constants.Companion.LOGIN
 import com.sdapps.auraascend.view.login.googlesignin.GoogleSignInHelper
@@ -45,6 +43,7 @@ class LoginActivity : AppCompatActivity(), LoginManager.View {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var googleSignHelper: GoogleSignInHelper
     private lateinit var spRef: SharedPrefHelper
+    private lateinit var vm : DataViewModel
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission(),
@@ -74,7 +73,8 @@ class LoginActivity : AppCompatActivity(), LoginManager.View {
         progressDialog = CustomProgressDialog(this)
         presenter = LoginPresenter()
         mAuth = Firebase.auth
-        presenter.attachView(this,applicationContext,mAuth)
+        vm = ViewModelProvider(this)[DataViewModel::class.java]
+        presenter.attachView(this, applicationContext, mAuth,vm)
         googleSignHelper = GoogleSignInHelper(this)
 
         binding.loginBtn.setOnClickListener {

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.sdapps.auraascend.DataViewModel
 import com.sdapps.auraascend.core.DateUtils
+import com.sdapps.auraascend.core.room.AppDatabase
 import com.sdapps.auraascend.databinding.FragmentDayBinding
 import com.sdapps.auraascend.view.home.fragments.funactivity.swipeaquote.SwipeQuoteActivity
 
@@ -35,16 +36,18 @@ class DayFragment : Fragment() , OnDialogDismiss{
 
     private fun init(){
         binding.dateView.text = DateUtils.getToday()
-
+        val dao = AppDatabase.getDatabase(requireContext()).getAppDAO()
 
         binding.quotesCardView.setOnClickListener {
             startActivity(Intent(requireActivity(), SwipeQuoteActivity::class.java))
         }
 
-        vm.quote.observe(viewLifecycleOwner) { dayQuotes ->
-            binding.quoteText.text = buildString { append(dayQuotes.quote).append(" - ").append(dayQuotes.author) }
+        vm.allQuotes.observe(viewLifecycleOwner) { quotesMasterList ->
+            val rndIdx = (0..quotesMasterList.size).random()
+            val quote = quotesMasterList[rndIdx]
+            binding.quoteText.text = buildString { append(quote.quote).append(" - ").append(quote.author) }
         }
-        vm.fetchQuote()
+        vm.fetchQuotesFromDB(dao)
 
         binding.addStory.setOnClickListener {
             UserEntryDialogFragment(this).show(requireActivity().supportFragmentManager, UserEntryDialogFragment.UED_DIALOG)

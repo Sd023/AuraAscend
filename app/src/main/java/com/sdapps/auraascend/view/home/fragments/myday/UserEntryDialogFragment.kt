@@ -30,11 +30,10 @@ import com.sdapps.auraascend.core.CustomProgressDialog
 import com.sdapps.auraascend.core.NetworkTools
 import com.sdapps.auraascend.core.SharedPrefHelper
 import com.sdapps.auraascend.core.room.AppDatabase
-import com.sdapps.auraascend.core.room.EmotionDao
+import com.sdapps.auraascend.core.room.AppDAO
 import com.sdapps.auraascend.core.room.EmotionEntity
 import com.sdapps.auraascend.databinding.DialogMoodEntryBinding
 import com.sdapps.auraascend.view.home.fragments.PodcastHelper.openPodcastsList
-import com.sdapps.auraascend.view.home.fragments.funactivity.FunActivityFragment
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
@@ -55,7 +54,7 @@ class UserEntryDialogFragment(var onDialogDismissed: OnDialogDismiss) : DialogFr
     private lateinit var classifer: ClassificationModel
     private var userInput = ""
     private lateinit var appDB : AppDatabase
-    private lateinit var dao : EmotionDao
+    private lateinit var dao : AppDAO
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

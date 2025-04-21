@@ -19,7 +19,7 @@ import com.sdapps.auraascend.DataViewModel
 import com.sdapps.auraascend.R
 import com.sdapps.auraascend.core.SharedPrefHelper
 import com.sdapps.auraascend.core.room.AppDatabase
-import com.sdapps.auraascend.core.room.EmotionDao
+import com.sdapps.auraascend.core.room.AppDAO
 import com.sdapps.auraascend.databinding.FragmentStatsBinding
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -32,7 +32,7 @@ class StatsFragment : Fragment() {
     private lateinit var spRef: SharedPrefHelper
     private val viewModel: DataViewModel by viewModels()
 
-    private lateinit var dao: EmotionDao
+    private lateinit var dao: AppDAO
     private lateinit var appDatabase: AppDatabase
     private val moodLabelToInt = mapOf(
         "sadness" to 0,

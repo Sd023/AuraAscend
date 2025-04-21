@@ -6,18 +6,14 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.sdapps.auraascend.DataViewModel
-import com.sdapps.auraascend.R
 import com.sdapps.auraascend.core.CustomProgressDialog
 import com.sdapps.auraascend.core.SharedPrefHelper
 import com.sdapps.auraascend.core.room.AppDatabase
-import com.sdapps.auraascend.core.room.EmotionDao
+import com.sdapps.auraascend.core.room.AppDAO
 import com.sdapps.auraascend.databinding.ActivityProfileBinding
 import com.sdapps.auraascend.view.login.LoginActivity
 import com.sdapps.auraascend.view.login.data.UserBO
@@ -33,7 +29,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var sharedPref : SharedPrefHelper
     private lateinit var progressDialog: CustomProgressDialog
     private lateinit var appDatabase: AppDatabase
-    private lateinit var dao : EmotionDao
+    private lateinit var dao : AppDAO
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

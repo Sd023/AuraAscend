@@ -14,6 +14,7 @@ import com.sdapps.auraascend.DataViewModel
 import com.sdapps.auraascend.R
 import com.sdapps.auraascend.core.CustomProgressDialog
 import com.sdapps.auraascend.core.SharedPrefHelper
+import com.sdapps.auraascend.core.room.AppDatabase
 import com.sdapps.auraascend.databinding.ActivitySwipeQuoteBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -92,6 +93,6 @@ class SwipeQuoteActivity : AppCompatActivity() {
                 binding.viewPager.adapter = adapter
             }
         }
-        dm.fetchAllQuotes()
+        dm.fetchQuotesFromDB(AppDatabase.getDatabase(this).getAppDAO())
     }
 }

@@ -7,8 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.Firebase
 import com.google.firebase.database.database
-import com.sdapps.auraascend.core.room.EmotionDao
+import com.sdapps.auraascend.core.room.AppDAO
 import com.sdapps.auraascend.core.room.EmotionEntity
+import com.sdapps.auraascend.core.room.QuotesMaster
 import com.sdapps.auraascend.view.home.RetrofitBuilder
 import com.sdapps.auraascend.view.home.fragments.myday.ClassificationModel
 import com.sdapps.auraascend.view.home.spotify.FetchSong.fetchPodcasts
@@ -18,7 +19,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class DataViewModel : ViewModel() {
     private val _onBoardingResponses = MutableLiveData<MutableMap<String, List<String>>>()
@@ -81,32 +81,26 @@ class DataViewModel : ViewModel() {
         _emotionLabel.value = label
     }
 
-    private val _quote = MutableLiveData<DayQuotes>()
-    val quote: LiveData<DayQuotes> = _quote
+    private val _allQuotes = MutableLiveData<ArrayList<QuotesMaster>>()
+    val allQuotes: LiveData<ArrayList<QuotesMaster>> = _allQuotes
 
-    fun fetchQuote() {
+    fun downloadAllQuotes(dao: AppDAO) {
         viewModelScope.launch {
             try {
-                val result = RetrofitBuilder.api.getQuote()
-                _quote.postValue(result)
-            } catch (ex: Exception) {
-                Log.e("QuoteVM", "Failed: ${ex.message}")
+                val result = RetrofitBuilder.api.getAllQuotes()
+                for(data in result){
+                    dao.insertQuotesMaster(data)
+                }
+            } catch (ex:Exception) {
+                println(ex.message)
             }
         }
     }
 
-    private val _allQuotes = MutableLiveData<ArrayList<DayQuotes>>()
-    val allQuotes: LiveData<ArrayList<DayQuotes>> = _allQuotes
-
-    fun fetchAllQuotes() {
+    fun fetchQuotesFromDB(dao: AppDAO){
         viewModelScope.launch {
-            try {
-                val result = RetrofitBuilder.api.getAllQuotes()
-                _allQuotes.postValue(result)
-
-            } catch (ex: kotlin.Exception) {
-                ex.message
-            }
+            val values = dao.getAllQuotes()
+            _allQuotes.postValue(ArrayList(values))
         }
     }
 
@@ -124,13 +118,13 @@ class DataViewModel : ViewModel() {
     private val _moods = MutableStateFlow<List<EmotionEntity>>(emptyList())
     val moods: StateFlow<List<EmotionEntity>> get() = _moods
 
-    fun insertIntoDB(emotion: EmotionEntity, dao: EmotionDao){
+    fun insertIntoDB(emotion: EmotionEntity, dao: AppDAO){
         viewModelScope.launch {
             dao.insertMood(emotion)
         }
     }
 
-    fun getEmotionsFromDB(dao: EmotionDao, whereCondition: List<String>){
+    fun getEmotionsFromDB(dao: AppDAO, whereCondition: List<String>){
         viewModelScope.launch {
            _moods.value =  dao.getMoodsByLabels(whereCondition)
         }
@@ -148,7 +142,7 @@ class DataViewModel : ViewModel() {
         "surprise" to 5
     )
 
-    fun loadDominantMoods(dao: EmotionDao,startDate: String, endDate: String) {
+    fun loadDominantMoods(dao: AppDAO, startDate: String, endDate: String) {
         viewModelScope.launch {
             val entries = dao.getEntriesBetween(startDate, endDate)
             val grouped: Map<String, Int> = entries
@@ -185,7 +179,7 @@ class DataViewModel : ViewModel() {
     private val _allMoodEntries = MutableLiveData<List<EmotionEntity>>()
     val allMoodEntries: LiveData<List<EmotionEntity>> = _allMoodEntries
 
-    fun getChartData(dao: EmotionDao){
+    fun getChartData(dao: AppDAO){
         viewModelScope.launch {
             _allMoodEntries.postValue(dao.getAllEntries())
         }

@@ -25,10 +25,10 @@ class RegisterPresenter: LoginManager.RegisterPresenter {
     override fun registerUser(email: String, password: String) {
     }
 
-    override fun createUser(userBO: UserBO) {
+    override fun createUser(userBO: UserBO,password: String) {
         mView.showLoading()
         if(userBO.email.isNotEmpty() && userBO.email.isNotEmpty()){
-            auth.createUserWithEmailAndPassword(userBO.email,userBO.password)
+            auth.createUserWithEmailAndPassword(userBO.email,password)
                 .addOnSuccessListener {
                     userBO.userId = auth.currentUser?.uid.toString()
                     addUserToFrb(userBO)
